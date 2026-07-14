@@ -1,0 +1,10 @@
+#root {
+  min-height: 100vh;
+}
+
+#threeRoot {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  background: #111827;
+}
