@@ -1,10 +1,11 @@
 import { type RefObject, useEffect } from 'react';
-import { createCamera } from '@/three/camera/createCamera';
-import { createCube } from '@/three/geometry/cube/createCube';
-import { createCubeRender } from '@/three/geometry/cube/createCubeRender';
-import { createRenderLoop } from '@/three/render/createRenderLoop';
-import { createRenderer, resizeRendererToCanvas } from '@/three/render/createRenderer';
-import { createScene } from '@/three/scene/createScene';
+import { createCamera } from './three/camera/createCamera';
+import { createCube } from './three/geometry/cube/createCube';
+import { createCubeRender } from './three/geometry/cube/createCubeRender';
+import { createRenderLoop } from './three/render/createRenderLoop';
+import { createRenderer, resizeRendererToCanvas } from './three/render/createRenderer';
+import { createScene } from './three/scene/createScene';
+import { createAxesHelper, createGridHelper } from './three/helper/createAxesHelper.ts';
 
 /**
  * 把 Three.js 的初始化、动画循环和销毁逻辑封装成一个 React Hook。
@@ -52,6 +53,12 @@ export function useThreeCube(canvasRef: RefObject<HTMLCanvasElement | null>) {
         }),
       },
     ];
+
+    const axesHelper = createAxesHelper();
+
+    scene.add(axesHelper);
+
+    scene.add(createGridHelper());
 
     // mesh 是 Three.js 中真正能被渲染出来的 3D 对象，需要添加到 scene 里。
     scene.add(cube.mesh);

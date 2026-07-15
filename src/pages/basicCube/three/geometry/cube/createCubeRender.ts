@@ -1,5 +1,5 @@
 import type { Cube } from './createCube';
-import type { RenderContext, RenderTaskRunner } from '@/three/render/createRenderLoop';
+import type { RenderContext, RenderTaskRunner } from '../../render/createRenderLoop';
 
 type CubeRenderOptions = {
   rotationSpeed?: {

@@ -16,14 +16,17 @@ export function createCamera() {
    * near：最近可见距离。小于 0.1 的物体不会被渲染。
    * far：最远可见距离。大于 5 的物体不会被渲染。
    */
-  const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 10);
+  const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 40);
 
   /**
    * Three.js 默认相机和物体都在世界坐标原点 (0, 0, 0)。
    * 如果相机和立方体重合，就像眼睛贴在物体内部，通常看不到正常画面。
    * 把相机沿 z 轴往后移到 z = 2，就能从前方看到原点处的立方体。
    */
-  camera.position.z = 2;
+  camera.position.z = 10;
+  camera.position.x = 10;
+  camera.position.y = 5;
+  camera.lookAt(0, 0, 0);
 
   return camera;
 }

@@ -1,13 +1,14 @@
 import './App.css';
-import { useRef } from 'react';
-import { useThreeCube } from './hooks/useThreeCube';
+import { Suspense } from 'react';
+import { RouterProvider } from 'react-router-dom';
+import { router } from '@/router';
 
 function App() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useThreeCube(canvasRef);
-
-  return <canvas ref={canvasRef} id="threeRoot" />;
+  return (
+    <Suspense fallback={null}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }
 
 export default App;
