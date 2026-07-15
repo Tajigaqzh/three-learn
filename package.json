@@ -1,11 +1,15 @@
 {
   "name": "vite-project",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
+    "prepare": "husky",
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "fmt": "oxfmt --no-error-on-unmatched-pattern",
+    "fmt:check": "oxfmt --check --no-error-on-unmatched-pattern",
+    "fmt:staged": "node scripts/format-staged.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },
@@ -24,6 +28,8 @@
     "@types/three": "^0.185.1",
     "@vitejs/plugin-react": "^6.0.3",
     "babel-plugin-react-compiler": "^1.0.0",
+    "husky": "^9.1.7",
+    "oxfmt": "^0.59.0",
     "oxlint": "^1.71.0",
     "typescript": "~6.0.2",
     "vite": "^8.1.1"
