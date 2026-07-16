@@ -1,0 +1,80 @@
+.light-demo-page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #111827;
+}
+
+.light-demo-controls {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: calc(100vw - 32px);
+  gap: 8px;
+  transform: translateX(-50%);
+}
+
+.light-demo-toolbar {
+  display: flex;
+  padding: 8px;
+  gap: 8px;
+  border: 1px solid rgb(148 163 184 / 0.28);
+  border-radius: 8px;
+  background: rgb(15 23 42 / 0.72);
+  backdrop-filter: blur(12px);
+}
+
+.light-demo-button {
+  display: inline-flex;
+  align-items: center;
+  min-width: 112px;
+  min-height: 36px;
+  padding: 0 12px;
+  gap: 8px;
+  border: 1px solid rgb(148 163 184 / 0.35);
+  border-radius: 6px;
+  background: rgb(30 41 59 / 0.78);
+  color: #cbd5e1;
+  font: inherit;
+  cursor: pointer;
+}
+
+.light-demo-button[data-active='true'] {
+  border-color: rgb(250 204 21 / 0.65);
+  background: rgb(71 85 105 / 0.86);
+  color: #f8fafc;
+}
+
+.light-demo-button__indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #64748b;
+}
+
+.light-demo-button[data-active='true'] .light-demo-button__indicator {
+  background: #facc15;
+  box-shadow: 0 0 12px rgb(250 204 21 / 0.85);
+}
+
+.light-demo-counter {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid rgb(148 163 184 / 0.28);
+  border-radius: 6px;
+  color: #e2e8f0;
+  font: inherit;
+  white-space: nowrap;
+}
+
+.light-demo-stats {
+  top: auto !important;
+  bottom: 16px;
+  left: 16px !important;
+}

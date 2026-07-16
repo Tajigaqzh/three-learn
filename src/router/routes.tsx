@@ -12,6 +12,14 @@ export const routes = [
     element: createElement(lazy(() => import('@/pages/shadowCube/ShadowCubeScenePage'))),
   },
   {
+    path: '/light-demo',
+    element: createElement(lazy(() => import('@/pages/lightDemo/LightDemoScenePage'))),
+  },
+  {
+    path: '/solar-system',
+    element: createElement(lazy(() => import('@/pages/solarSystem/SolarSystemScenePage'))),
+  },
+  {
     path: '*',
     element: <NotFoundPage />,
   },

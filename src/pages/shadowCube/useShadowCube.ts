@@ -50,6 +50,15 @@ export function useShadowCube(canvasRef: RefObject<HTMLCanvasElement | null>) {
       ],
     });
 
+    /**
+     * orbitControls的回调
+     */
+    const orbitEventCallback = () => {
+      console.log('camera.position', camera.position);
+    };
+
+    orbitControls.addEventListener('change', orbitEventCallback);
+
     resize();
     renderer.setAnimationLoop(render);
     window.addEventListener('resize', resize);

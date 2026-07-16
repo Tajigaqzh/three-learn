@@ -21,7 +21,7 @@ export function createRenderer(canvas: HTMLCanvasElement) {
   // 1. 开启阴影支持
   renderer.shadowMap.enabled = true;
   // PCFSoftShadowMap 能让阴影边缘带有模糊过渡，这是提升真实感的关键
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
 
   // 使用深灰色代替纯黑色，能更好地衬托出物体的明暗交界线，避免暗部细节丢失
   renderer.setClearColor(0x262626);

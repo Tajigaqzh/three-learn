@@ -13,6 +13,8 @@ export function createOrbitControls(camera: THREE.PerspectiveCamera, canvas: HTM
   controls.zoomSpeed = 0.8;
   controls.minDistance = 15;
   controls.maxDistance = 120;
+  controls.minPolarAngle = 0;
+  controls.maxPolarAngle = Math.PI / 2 - 0.05;
   controls.update();
 
   return controls;

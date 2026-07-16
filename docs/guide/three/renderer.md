@@ -28,7 +28,8 @@ renderer.setClearColor(0x262626);
 
 ```ts
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap; // 过期了
+renderer.shadowMap.type = THREE.PCFShadowMap;
 ```
 
 `PCFSoftShadowMap` 会让阴影边缘更柔和。

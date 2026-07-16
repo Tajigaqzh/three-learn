@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 420" role="img" aria-label="OrbitControls 参数示意图">
+  <rect width="920" height="420" rx="8" fill="#171717"/>
+  <defs>
+    <marker id="orbitArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#60a5fa"/>
+    </marker>
+  </defs>
+  <g font-family="Arial, sans-serif">
+    <text x="40" y="44" fill="#f5f5f5" font-size="24" font-weight="700">OrbitControls：围绕 target 旋转相机</text>
+    <text x="40" y="72" fill="#a1a1aa" font-size="15">通过距离和角度限制，控制用户能看到的范围。</text>
+
+    <circle cx="460" cy="230" r="10" fill="#facc15"/>
+    <text x="478" y="235" fill="#facc15" font-size="15" font-weight="700">target (0, 0, 0)</text>
+
+    <ellipse cx="460" cy="230" rx="250" ry="104" fill="none" stroke="#60a5fa" stroke-width="3" stroke-dasharray="10 8"/>
+    <ellipse cx="460" cy="230" rx="130" ry="54" fill="none" stroke="#22c55e" stroke-width="3" stroke-dasharray="8 7"/>
+    <text x="565" y="170" fill="#22c55e" font-size="15" font-weight="700">minDistance</text>
+    <text x="650" y="130" fill="#60a5fa" font-size="15" font-weight="700">maxDistance</text>
+
+    <polygon points="0,34 70,0 70,68" transform="translate(678 126)" fill="#334155" stroke="#cbd5e1"/>
+    <text x="680" y="220" fill="#d4d4d8" font-size="14">camera</text>
+    <line x1="678" y1="160" x2="470" y2="224" stroke="#60a5fa" stroke-width="3" marker-end="url(#orbitArrow)"/>
+
+    <path d="M460 230 L460 88" stroke="#facc15" stroke-width="3"/>
+    <path d="M460 230 L606 230" stroke="#facc15" stroke-width="3"/>
+    <path d="M492 104 A130 130 0 0 1 590 194" fill="none" stroke="#fb7185" stroke-width="5"/>
+    <text x="606" y="188" fill="#fb7185" font-size="15" font-weight="700">maxPolarAngle</text>
+    <text x="476" y="104" fill="#d4d4d8" font-size="13">0：正上方</text>
+    <text x="612" y="236" fill="#d4d4d8" font-size="13">π/2：水平</text>
+
+    <rect x="88" y="120" width="210" height="176" rx="10" fill="#202020" stroke="#3f3f46"/>
+    <text x="112" y="154" fill="#f5f5f5" font-size="17" font-weight="700">关键限制</text>
+    <text x="112" y="186" fill="#d4d4d8" font-size="14">minDistance = 15</text>
+    <text x="112" y="212" fill="#d4d4d8" font-size="14">maxDistance = 120</text>
+    <text x="112" y="238" fill="#d4d4d8" font-size="14">minPolarAngle = 0</text>
+    <text x="112" y="264" fill="#d4d4d8" font-size="14">maxPolarAngle = π/2 - 0.05</text>
+  </g>
+</svg>

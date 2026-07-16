@@ -6,7 +6,8 @@
 
 ```ts
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap; // 过期了
+renderer.shadowMap.type = THREE.PCFShadowMap;
 ```
 
 第二层：光源允许投射阴影。

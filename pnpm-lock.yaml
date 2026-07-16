@@ -14,6 +14,9 @@ dependencies:
   react-router-dom:
     specifier: ^7.18.1
     version: 7.18.1(react-dom@19.2.7)(react@19.2.7)
+  stats.js:
+    specifier: ^0.17.0
+    version: 0.17.0
   three:
     specifier: ^0.185.1
     version: 0.185.1
@@ -40,6 +43,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^19.2.3
     version: 19.2.3(@types/react@19.2.17)
+  '@types/stats.js':
+    specifier: ^0.17.4
+    version: 0.17.4
   '@types/three':
     specifier: ^0.185.1
     version: 0.185.1
@@ -2748,6 +2754,10 @@ packages:
   /stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
     dev: true
+
+  /stats.js@0.17.0:
+    resolution: {integrity: sha512-hNKz8phvYLPEcRkeG1rsGmV5ChMjKDAWU7/OJJdDErPBNChQXxCo3WZurGpnWc6gZhAzEPFad1aVgyOANH1sMw==}
+    dev: false
 
   /std-env@4.2.0:
     resolution: {integrity: sha512-oCUKSupKTHX53EyjDtuZQ64pjLJ6yYCtpmEw0goYxtjG9KpbRe8KAsl2tBUGU9DyMcJ0RwJ8GqJAFzMXcXW1Rw==}
