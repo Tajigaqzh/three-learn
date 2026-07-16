@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-label="Three.js 相机类型对比">
+  <rect width="920" height="360" rx="8" fill="#171717"/>
+  <defs>
+    <marker id="cameraTypeArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#60a5fa"/>
+    </marker>
+  </defs>
+  <g font-family="Arial, sans-serif">
+    <text x="40" y="44" fill="#f5f5f5" font-size="24" font-weight="700">相机类型对比</text>
+    <text x="40" y="72" fill="#a1a1aa" font-size="15">透视相机强调真实空间深度；正交相机保留尺寸关系；其他相机多用于特殊渲染。</text>
+
+    <g transform="translate(44 108)">
+      <rect x="0" y="0" width="250" height="210" rx="10" fill="#202020" stroke="#3f3f46"/>
+      <text x="20" y="32" fill="#f5f5f5" font-size="18" font-weight="700">PerspectiveCamera</text>
+      <text x="20" y="56" fill="#a1a1aa" font-size="13">透视相机：近大远小</text>
+      <polygon points="46,112 206,48 206,176" fill="#1d4ed8" opacity="0.22" stroke="#60a5fa"/>
+      <polygon points="24,104 52,88 52,120" fill="#334155" stroke="#cbd5e1"/>
+      <line x1="52" y1="104" x2="206" y2="48" stroke="#60a5fa" marker-end="url(#cameraTypeArrow)"/>
+      <line x1="52" y1="104" x2="206" y2="176" stroke="#60a5fa" marker-end="url(#cameraTypeArrow)"/>
+      <rect x="102" y="94" width="34" height="34" fill="#38bdf8" stroke="#e0f2fe"/>
+      <rect x="168" y="82" width="22" height="22" fill="#38bdf8" stroke="#e0f2fe" opacity="0.75"/>
+      <text x="20" y="196" fill="#d4d4d8" font-size="13">适合真实感 3D、游戏、产品展示</text>
+    </g>
+
+    <g transform="translate(334 108)">
+      <rect x="0" y="0" width="250" height="210" rx="10" fill="#202020" stroke="#3f3f46"/>
+      <text x="20" y="32" fill="#f5f5f5" font-size="18" font-weight="700">OrthographicCamera</text>
+      <text x="20" y="56" fill="#a1a1aa" font-size="13">正交相机：远近同大</text>
+      <polygon points="58,60 206,60 206,164 58,164" fill="#1d4ed8" opacity="0.22" stroke="#60a5fa"/>
+      <polygon points="24,104 52,88 52,120" fill="#334155" stroke="#cbd5e1"/>
+      <line x1="58" y1="72" x2="206" y2="72" stroke="#60a5fa" marker-end="url(#cameraTypeArrow)"/>
+      <line x1="58" y1="112" x2="206" y2="112" stroke="#60a5fa" marker-end="url(#cameraTypeArrow)"/>
+      <line x1="58" y1="152" x2="206" y2="152" stroke="#60a5fa" marker-end="url(#cameraTypeArrow)"/>
+      <rect x="102" y="94" width="30" height="30" fill="#38bdf8" stroke="#e0f2fe"/>
+      <rect x="168" y="94" width="30" height="30" fill="#38bdf8" stroke="#e0f2fe" opacity="0.75"/>
+      <text x="20" y="196" fill="#d4d4d8" font-size="13">适合 2D、地图、工程图、等距视角</text>
+    </g>
+
+    <g transform="translate(624 108)">
+      <rect x="0" y="0" width="250" height="210" rx="10" fill="#202020" stroke="#3f3f46"/>
+      <text x="20" y="32" fill="#f5f5f5" font-size="18" font-weight="700">Cube / Array Camera</text>
+      <text x="20" y="56" fill="#a1a1aa" font-size="13">特殊相机：服务特定渲染需求</text>
+      <circle cx="88" cy="112" r="10" fill="#facc15"/>
+      <line x1="88" y1="112" x2="88" y2="62" stroke="#facc15" marker-end="url(#cameraTypeArrow)"/>
+      <line x1="88" y1="112" x2="138" y2="112" stroke="#facc15" marker-end="url(#cameraTypeArrow)"/>
+      <line x1="88" y1="112" x2="88" y2="162" stroke="#facc15" marker-end="url(#cameraTypeArrow)"/>
+      <line x1="88" y1="112" x2="38" y2="112" stroke="#facc15" marker-end="url(#cameraTypeArrow)"/>
+      <rect x="156" y="78" width="58" height="68" fill="#334155" stroke="#cbd5e1"/>
+      <line x1="156" y1="98" x2="214" y2="98" stroke="#94a3b8"/>
+      <line x1="156" y1="124" x2="214" y2="124" stroke="#94a3b8"/>
+      <line x1="176" y1="78" x2="176" y2="146" stroke="#94a3b8"/>
+      <line x1="196" y1="78" x2="196" y2="146" stroke="#94a3b8"/>
+      <text x="20" y="196" fill="#d4d4d8" font-size="13">环境反射、多视口、VR 等特殊场景</text>
+    </g>
+  </g>
+</svg>

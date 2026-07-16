@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 320" role="img" aria-label="常见 Three.js Geometry 形状">
+  <rect width="920" height="320" rx="8" fill="#171717"/>
+  <g font-family="Arial, sans-serif">
+    <text x="40" y="44" fill="#f5f5f5" font-size="24" font-weight="700">Geometry 决定 Mesh 的形状</text>
+    <text x="40" y="72" fill="#a1a1aa" font-size="15">Material 决定表面外观；Mesh = Geometry + Material。</text>
+
+    <g transform="translate(70 110)">
+      <polygon points="30,52 76,24 122,52 76,80" fill="#38bdf8" stroke="#e0f2fe"/>
+      <polygon points="30,52 30,100 76,130 76,80" fill="#2563eb" stroke="#e0f2fe"/>
+      <polygon points="122,52 122,100 76,130 76,80" fill="#0f766e" stroke="#e0f2fe"/>
+      <text x="76" y="178" text-anchor="middle" fill="#f5f5f5" font-size="17" font-weight="700">BoxGeometry</text>
+      <text x="76" y="202" text-anchor="middle" fill="#a1a1aa" font-size="13">立方体 / 长方体</text>
+    </g>
+
+    <g transform="translate(235 110)">
+      <circle cx="76" cy="78" r="54" fill="#38bdf8" stroke="#e0f2fe"/>
+      <ellipse cx="76" cy="78" rx="54" ry="16" fill="none" stroke="#075985" stroke-width="2"/>
+      <ellipse cx="76" cy="78" rx="20" ry="54" fill="none" stroke="#075985" stroke-width="2"/>
+      <path d="M22 78 H130" stroke="#bae6fd" stroke-width="1.5" opacity="0.7"/>
+      <text x="76" y="178" text-anchor="middle" fill="#f5f5f5" font-size="17" font-weight="700">SphereGeometry</text>
+      <text x="76" y="202" text-anchor="middle" fill="#a1a1aa" font-size="13">球体</text>
+    </g>
+
+    <g transform="translate(400 110)">
+      <ellipse cx="76" cy="42" rx="48" ry="18" fill="#7dd3fc" stroke="#e0f2fe"/>
+      <rect x="28" y="42" width="96" height="80" fill="#2563eb" stroke="#e0f2fe"/>
+      <ellipse cx="76" cy="122" rx="48" ry="18" fill="#0f766e" stroke="#e0f2fe"/>
+      <text x="76" y="178" text-anchor="middle" fill="#f5f5f5" font-size="17" font-weight="700">CylinderGeometry</text>
+      <text x="76" y="202" text-anchor="middle" fill="#a1a1aa" font-size="13">圆柱</text>
+    </g>
+
+    <g transform="translate(565 110)">
+      <path d="M76 22 L28 122 H124 Z" fill="#2563eb" stroke="#e0f2fe"/>
+      <ellipse cx="76" cy="122" rx="48" ry="18" fill="#0f766e" stroke="#e0f2fe"/>
+      <line x1="76" y1="22" x2="76" y2="122" stroke="#bae6fd" stroke-width="1.5" opacity="0.7"/>
+      <text x="76" y="178" text-anchor="middle" fill="#f5f5f5" font-size="17" font-weight="700">ConeGeometry</text>
+      <text x="76" y="202" text-anchor="middle" fill="#a1a1aa" font-size="13">圆锥</text>
+    </g>
+
+    <g transform="translate(730 110)">
+      <polygon points="22,110 130,70 130,126 22,166" fill="#2563eb" stroke="#e0f2fe"/>
+      <line x1="48" y1="100" x2="48" y2="156" stroke="#bae6fd" opacity="0.45"/>
+      <line x1="76" y1="90" x2="76" y2="146" stroke="#bae6fd" opacity="0.45"/>
+      <line x1="104" y1="80" x2="104" y2="136" stroke="#bae6fd" opacity="0.45"/>
+      <line x1="22" y1="128" x2="130" y2="88" stroke="#bae6fd" opacity="0.45"/>
+      <line x1="22" y1="146" x2="130" y2="106" stroke="#bae6fd" opacity="0.45"/>
+      <text x="76" y="178" text-anchor="middle" fill="#f5f5f5" font-size="17" font-weight="700">PlaneGeometry</text>
+      <text x="76" y="202" text-anchor="middle" fill="#a1a1aa" font-size="13">平面 / 地面</text>
+    </g>
+  </g>
+</svg>

@@ -5,7 +5,7 @@ export function createLights() {
   const sunLight = new THREE.DirectionalLight(0xffffff, 1.5);
   const shadowCameraSize = 50;
 
-  sunLight.position.set(10, 20, 10);
+  sunLight.position.set(30, 20, 30);
   sunLight.castShadow = true;
   sunLight.shadow.mapSize.width = 1024;
   sunLight.shadow.mapSize.height = 1024;

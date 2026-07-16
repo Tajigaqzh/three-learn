@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-label="Scene 是 Three.js 的 3D 世界容器">
+  <rect width="920" height="360" rx="8" fill="#171717"/>
+  <defs>
+    <marker id="sceneArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#60a5fa"/>
+    </marker>
+  </defs>
+  <g font-family="Arial, sans-serif">
+    <rect x="40" y="40" width="560" height="280" rx="14" fill="#202020" stroke="#52525b" stroke-width="2"/>
+    <text x="70" y="78" fill="#f5f5f5" font-size="24" font-weight="700">Scene</text>
+    <text x="70" y="104" fill="#a1a1aa" font-size="15">3D 世界的根容器，负责装下物体、灯光和辅助对象</text>
+
+    <path d="M110 250 L500 250" stroke="#52525b" stroke-width="3"/>
+    <path d="M135 248 V136" stroke="#ef4444" stroke-width="4"/>
+    <path d="M135 248 H255" stroke="#22c55e" stroke-width="4"/>
+    <path d="M135 248 L88 292" stroke="#3b82f6" stroke-width="4"/>
+    <text x="145" y="142" fill="#ef4444" font-size="13">Y</text>
+    <text x="258" y="252" fill="#22c55e" font-size="13">X</text>
+    <text x="78" y="306" fill="#3b82f6" font-size="13">Z</text>
+
+    <g transform="translate(290 160)">
+      <polygon points="0,50 46,22 92,50 46,78" fill="#1d4ed8" stroke="#bfdbfe"/>
+      <polygon points="0,50 0,98 46,128 46,78" fill="#2563eb" stroke="#bfdbfe"/>
+      <polygon points="92,50 92,98 46,128 46,78" fill="#0f766e" stroke="#bfdbfe"/>
+      <polygon points="0,50 46,22 46,78" fill="#38bdf8" opacity="0.9"/>
+      <text x="20" y="154" fill="#d4d4d8" font-size="14">Mesh 物体</text>
+    </g>
+
+    <g transform="translate(450 88)">
+      <circle cx="0" cy="0" r="16" fill="#facc15"/>
+      <line x1="-36" y1="40" x2="-90" y2="94" stroke="#facc15" stroke-width="4" marker-end="url(#sceneArrow)"/>
+      <line x1="-12" y1="45" x2="-58" y2="104" stroke="#facc15" stroke-width="4" marker-end="url(#sceneArrow)"/>
+      <line x1="14" y1="44" x2="-22" y2="112" stroke="#facc15" stroke-width="4" marker-end="url(#sceneArrow)"/>
+      <text x="-52" y="-24" fill="#d4d4d8" font-size="14">Light 光源</text>
+    </g>
+
+    <g transform="translate(660 110)">
+      <polygon points="0,34 70,0 70,68" fill="#334155" stroke="#cbd5e1"/>
+      <rect x="70" y="18" width="46" height="32" rx="4" fill="#475569" stroke="#cbd5e1"/>
+      <line x1="-28" y1="34" x2="-98" y2="86" stroke="#60a5fa" stroke-width="3" marker-end="url(#sceneArrow)"/>
+      <text x="-2" y="94" fill="#f5f5f5" font-size="18" font-weight="700">Camera</text>
+      <text x="-2" y="118" fill="#a1a1aa" font-size="14">从某个角度观察 Scene</text>
+    </g>
+
+    <line x1="630" y1="164" x2="548" y2="208" stroke="#60a5fa" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#sceneArrow)"/>
+  </g>
+</svg>

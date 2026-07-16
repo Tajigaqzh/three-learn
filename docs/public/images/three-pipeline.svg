@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" role="img" aria-label="Three.js 基础渲染流程">
+  <rect width="900" height="220" rx="8" fill="#171717"/>
+  <defs>
+    <marker id="pipelineArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#60a5fa"/>
+    </marker>
+  </defs>
+  <g font-family="Arial, sans-serif">
+    <rect x="28" y="52" width="160" height="110" rx="8" fill="#202020" stroke="#52525b"/>
+    <text x="108" y="92" text-anchor="middle" fill="#f5f5f5" font-size="20" font-weight="700">Scene</text>
+    <text x="108" y="122" text-anchor="middle" fill="#d4d4d8" font-size="14">物体 / 灯光 / 辅助线</text>
+
+    <rect x="260" y="52" width="160" height="110" rx="8" fill="#202020" stroke="#52525b"/>
+    <text x="340" y="92" text-anchor="middle" fill="#f5f5f5" font-size="20" font-weight="700">Camera</text>
+    <text x="340" y="122" text-anchor="middle" fill="#d4d4d8" font-size="14">观察位置和视角</text>
+
+    <rect x="492" y="52" width="160" height="110" rx="8" fill="#202020" stroke="#52525b"/>
+    <text x="572" y="92" text-anchor="middle" fill="#f5f5f5" font-size="20" font-weight="700">Renderer</text>
+    <text x="572" y="122" text-anchor="middle" fill="#d4d4d8" font-size="14">执行绘制</text>
+
+    <rect x="724" y="52" width="148" height="110" rx="8" fill="#202020" stroke="#52525b"/>
+    <text x="798" y="92" text-anchor="middle" fill="#f5f5f5" font-size="20" font-weight="700">Canvas</text>
+    <text x="798" y="122" text-anchor="middle" fill="#d4d4d8" font-size="14">页面上的画布</text>
+
+    <line x1="198" y1="107" x2="250" y2="107" stroke="#60a5fa" stroke-width="4" marker-end="url(#pipelineArrow)"/>
+    <line x1="430" y1="107" x2="482" y2="107" stroke="#60a5fa" stroke-width="4" marker-end="url(#pipelineArrow)"/>
+    <line x1="662" y1="107" x2="714" y2="107" stroke="#60a5fa" stroke-width="4" marker-end="url(#pipelineArrow)"/>
+
+    <text x="450" y="196" text-anchor="middle" fill="#a1a1aa" font-size="14">renderer.render(scene, camera)</text>
+  </g>
+</svg>

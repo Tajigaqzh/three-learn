@@ -1,5 +1,6 @@
 import { type RefObject, useEffect } from 'react';
 import { createCamera } from './three/camera/createCamera';
+import { createOrbitControls } from './three/control/createOrbitControls';
 import { createCube } from './three/geometry/cube/createCube';
 import { createCubeRender } from './three/geometry/cube/createCubeRender';
 import { createRenderLoop } from './three/render/createRenderLoop';
@@ -30,6 +31,8 @@ export function useThreeCube(canvasRef: RefObject<HTMLCanvasElement | null>) {
     // camera：相机，决定我们从哪个位置、哪个角度观察 3D 世界。
     const camera = createCamera();
 
+    const orbitControls = createOrbitControls(camera, canvas);
+
     // cube：这里返回的不只是 mesh，还包含 dispose 方法，方便卸载时释放 GPU 资源。
     const cube = createCube();
 
@@ -51,6 +54,12 @@ export function useThreeCube(canvasRef: RefObject<HTMLCanvasElement | null>) {
             y: 0.8,
           },
         }),
+      },
+      {
+        orderNumber: 2,
+        run: () => {
+          orbitControls.update();
+        },
       },
     ];
 
@@ -97,6 +106,7 @@ export function useThreeCube(canvasRef: RefObject<HTMLCanvasElement | null>) {
       // 从场景里移除 mesh，并释放几何体、材质、渲染器持有的底层资源。
       // Three.js 对象通常会占用 GPU 资源，只靠 JavaScript 垃圾回收并不够。
       scene.remove(cube.mesh);
+      orbitControls.dispose();
       cube.dispose();
       renderer.dispose();
     };

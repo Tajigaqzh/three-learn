@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 320" role="img" aria-label="ArrayCamera 多相机视口示意图">
+  <rect width="820" height="320" rx="8" fill="#171717"/>
+  <g font-family="Arial, sans-serif">
+    <text x="40" y="44" fill="#f5f5f5" font-size="24" font-weight="700">ArrayCamera：多个子相机一起渲染</text>
+    <text x="40" y="72" fill="#a1a1aa" font-size="15">适合多视口、多屏幕或特殊渲染场景。</text>
+    <g transform="translate(94 122)">
+      <polygon points="0,22 42,0 42,44" fill="#334155" stroke="#cbd5e1"/>
+      <polygon points="0,82 42,60 42,104" fill="#334155" stroke="#cbd5e1"/>
+      <polygon points="0,142 42,120 42,164" fill="#334155" stroke="#cbd5e1"/>
+      <text x="-16" y="202" fill="#d4d4d8" font-size="14">多个子相机</text>
+    </g>
+    <g transform="translate(370 105)">
+      <rect x="0" y="0" width="320" height="180" rx="8" fill="#202020" stroke="#52525b"/>
+      <line x1="160" y1="0" x2="160" y2="180" stroke="#52525b"/>
+      <line x1="0" y1="90" x2="320" y2="90" stroke="#52525b"/>
+      <text x="80" y="52" text-anchor="middle" fill="#f5f5f5" font-size="18" font-weight="700">View A</text>
+      <text x="240" y="52" text-anchor="middle" fill="#f5f5f5" font-size="18" font-weight="700">View B</text>
+      <text x="80" y="142" text-anchor="middle" fill="#f5f5f5" font-size="18" font-weight="700">View C</text>
+      <text x="240" y="142" text-anchor="middle" fill="#f5f5f5" font-size="18" font-weight="700">View D</text>
+    </g>
+    <path d="M160 144 C240 120, 280 115, 360 115" fill="none" stroke="#60a5fa" stroke-width="3"/>
+    <path d="M160 204 C240 190, 280 205, 360 195" fill="none" stroke="#60a5fa" stroke-width="3"/>
+  </g>
+</svg>

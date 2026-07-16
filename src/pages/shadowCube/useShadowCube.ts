@@ -1,8 +1,9 @@
 import { type RefObject, useEffect } from 'react';
 import { createCamera } from './three/camera/createCamera';
+import { createOrbitControls } from './three/control/createOrbitControls';
 import { createShadowCube } from './three/geometry/cube/createShadowCube';
-import { createCubeRender } from './three/geometry/cube/createCubeRender';
 import { createGround } from './three/geometry/ground/createGround';
+import { createAxesHelper, createGridHelper } from './three/helper/createSceneHelpers';
 import { createLights } from './three/light/createLights';
 import { createRenderLoop } from './three/render/createRenderLoop';
 import { createRenderer, resizeRendererToCanvas } from './three/render/createRenderer';
@@ -17,12 +18,17 @@ export function useShadowCube(canvasRef: RefObject<HTMLCanvasElement | null>) {
     const renderer = createRenderer(canvas);
     const scene = createScene();
     const camera = createCamera();
+    const orbitControls = createOrbitControls(camera, canvas);
     const cube = createShadowCube();
     const ground = createGround();
     const lights = createLights();
+    const axesHelper = createAxesHelper();
+    const gridHelper = createGridHelper();
 
     scene.add(lights.ambientLight);
     scene.add(lights.sunLight);
+    scene.add(axesHelper);
+    scene.add(gridHelper);
     scene.add(ground.mesh);
     scene.add(cube.mesh);
 
@@ -36,13 +42,10 @@ export function useShadowCube(canvasRef: RefObject<HTMLCanvasElement | null>) {
       camera,
       renderTasks: [
         {
-          orderNumber: 1,
-          run: createCubeRender(cube, {
-            rotationSpeed: {
-              x: 0.25,
-              y: 0.45,
-            },
-          }),
+          orderNumber: 2,
+          run: () => {
+            orbitControls.update();
+          },
         },
       ],
     });
@@ -57,8 +60,11 @@ export function useShadowCube(canvasRef: RefObject<HTMLCanvasElement | null>) {
 
       scene.remove(lights.ambientLight);
       scene.remove(lights.sunLight);
+      scene.remove(axesHelper);
+      scene.remove(gridHelper);
       scene.remove(ground.mesh);
       scene.remove(cube.mesh);
+      orbitControls.dispose();
       ground.dispose();
       cube.dispose();
       renderer.dispose();

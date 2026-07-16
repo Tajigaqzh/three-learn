@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 320" role="img" aria-label="CinematicCamera 景深示意图">
+  <rect width="820" height="320" rx="8" fill="#171717"/>
+  <defs>
+    <filter id="blurObj">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+  <g font-family="Arial, sans-serif">
+    <text x="40" y="44" fill="#f5f5f5" font-size="24" font-weight="700">CinematicCamera：电影镜头和景深</text>
+    <text x="40" y="72" fill="#a1a1aa" font-size="15">常用于模拟焦点、虚化、镜头感。它属于 examples 扩展，不是最基础相机。</text>
+    <polygon points="76,168 128,136 128,200" fill="#334155" stroke="#cbd5e1"/>
+    <rect x="38" y="148" width="38" height="40" rx="4" fill="#475569" stroke="#cbd5e1"/>
+    <line x1="130" y1="168" x2="696" y2="168" stroke="#60a5fa" stroke-width="2" stroke-dasharray="8 8"/>
+    <circle cx="268" cy="168" r="38" fill="#64748b" opacity="0.45" filter="url(#blurObj)"/>
+    <text x="268" y="236" text-anchor="middle" fill="#a1a1aa" font-size="14">前景虚化</text>
+    <circle cx="430" cy="168" r="44" fill="#38bdf8" stroke="#e0f2fe" stroke-width="3"/>
+    <text x="430" y="236" text-anchor="middle" fill="#f5f5f5" font-size="14">焦点清晰</text>
+    <circle cx="604" cy="168" r="38" fill="#64748b" opacity="0.45" filter="url(#blurObj)"/>
+    <text x="604" y="236" text-anchor="middle" fill="#a1a1aa" font-size="14">背景虚化</text>
+    <line x1="430" y1="104" x2="430" y2="214" stroke="#facc15" stroke-width="3"/>
+    <text x="446" y="112" fill="#facc15" font-size="15" font-weight="700">focus</text>
+  </g>
+</svg>

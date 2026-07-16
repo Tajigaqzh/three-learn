@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export function createShadowCube() {
-  const geometry = new THREE.BoxGeometry(10, 10, 10);
+  const geometry = new THREE.BoxGeometry(4, 4, 4);
   const material = new THREE.MeshStandardMaterial({
     color: 0x2196f3,
     roughness: 0.3,
@@ -11,7 +11,6 @@ export function createShadowCube() {
 
   mesh.castShadow = true;
   mesh.receiveShadow = true;
-  mesh.position.y = 0;
 
   return {
     mesh,
