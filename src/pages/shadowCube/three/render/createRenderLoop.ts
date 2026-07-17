@@ -1,18 +1,18 @@
-import * as THREE from 'three';
+import { Camera, Scene, Timer, WebGLRenderer } from 'three';
 
 type CreateRenderLoopParams = {
-  renderer: THREE.WebGLRenderer;
-  scene: THREE.Scene;
-  camera: THREE.Camera;
+  renderer: WebGLRenderer;
+  scene: Scene;
+  camera: Camera;
   renderTasks?: RenderTask[];
 };
 
 export type RenderContext = {
   delta: number;
   elapsedTime: number;
-  renderer: THREE.WebGLRenderer;
-  scene: THREE.Scene;
-  camera: THREE.Camera;
+  renderer: WebGLRenderer;
+  scene: Scene;
+  camera: Camera;
 };
 
 export type RenderTaskRunner = (context: RenderContext) => void;
@@ -36,7 +36,7 @@ export function createRenderLoop({
   camera,
   renderTasks = [],
 }: CreateRenderLoopParams) {
-  const timer = new THREE.Timer();
+  const timer = new Timer();
   const orderedRenderTasks = renderTasks
     .map<OrderedRenderTask>((renderTask, originalIndex) => {
       if (typeof renderTask === 'function') {

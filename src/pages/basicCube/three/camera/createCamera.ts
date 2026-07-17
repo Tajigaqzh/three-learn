@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import { PerspectiveCamera } from 'three';
 
 /**
  * 创建透视相机。
@@ -16,7 +16,7 @@ export function createCamera() {
    * near：最近可见距离。小于 0.1 的物体不会被渲染。
    * far：最远可见距离。大于 5 的物体不会被渲染。
    */
-  const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 40);
+  const camera = new PerspectiveCamera(75, 1, 0.1, 40);
 
   /**
    * Three.js 默认相机和物体都在世界坐标原点 (0, 0, 0)。

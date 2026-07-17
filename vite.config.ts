@@ -16,31 +16,9 @@ export default defineConfig({
         codeSplitting: {
           groups: [
             {
-              name: 'react-vendor',
-              test: /node_modules[\\/]react/,
-              minSize: 100000,
-              maxSize: 250000,
-              priority: 30,
-            },
-            {
               name: 'three-vendor',
               test: /node_modules[\\/]three/,
-              minSize: 100000,
-              maxSize: 250000,
-              priority: 20,
-            },
-            {
-              name: 'vendor',
-              test: /node_modules/,
-              minSize: 100000,
-              maxSize: 250000,
               priority: 10,
-            },
-            {
-              name: 'common',
-              minShareCount: 2,
-              minSize: 10000,
-              priority: 5,
             },
           ],
         },

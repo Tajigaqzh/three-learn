@@ -1,8 +1,8 @@
-import * as THREE from 'three';
+import { AmbientLight, DirectionalLight } from 'three';
 
 export function createLights() {
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-  const sunLight = new THREE.DirectionalLight(0xffffff, 1.5);
+  const ambientLight = new AmbientLight(0xffffff, 0.5);
+  const sunLight = new DirectionalLight(0xffffff, 1.5);
   const shadowCameraSize = 50;
 
   sunLight.position.set(30, 20, 30);

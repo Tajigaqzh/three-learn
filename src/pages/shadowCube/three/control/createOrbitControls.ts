@@ -1,7 +1,7 @@
-import type * as THREE from 'three';
+import type { PerspectiveCamera } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-export function createOrbitControls(camera: THREE.PerspectiveCamera, canvas: HTMLCanvasElement) {
+export function createOrbitControls(camera: PerspectiveCamera, canvas: HTMLCanvasElement) {
   const controls = new OrbitControls(camera, canvas);
 
   controls.target.set(0, 0, 0);

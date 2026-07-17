@@ -1,9 +1,9 @@
-import * as THREE from 'three';
+import { AxesHelper, GridHelper } from 'three';
 
 export const createAxesHelper = () => {
-  return new THREE.AxesHelper(30);
+  return new AxesHelper(30);
 };
 
 export const createGridHelper = () => {
-  return new THREE.GridHelper(10, 10);
+  return new GridHelper(10, 10);
 };

@@ -1,9 +1,37 @@
-import * as THREE from 'three';
+import {
+  AmbientLight,
+  AxesHelper,
+  BoxGeometry,
+  CapsuleGeometry,
+  Color,
+  ConeGeometry,
+  CylinderGeometry,
+  DirectionalLight,
+  DodecahedronGeometry,
+  Float32BufferAttribute,
+  GridHelper,
+  HemisphereLight,
+  Light,
+  Mesh,
+  MeshLambertMaterial,
+  MeshStandardMaterial,
+  OctahedronGeometry,
+  PCFShadowMap,
+  PerspectiveCamera,
+  PlaneGeometry,
+  PointLight,
+  PolyhedronGeometry,
+  Scene,
+  SphereGeometry,
+  SpotLight,
+  TorusGeometry,
+  WebGLRenderer,
+} from 'three';
 import Stats from 'three/addons/libs/stats.module.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import type { LightState, LightType } from './types';
 
-type LightSet = Record<LightType, THREE.Light>;
+type LightSet = Record<LightType, Light>;
 
 type StressBoxes = {
   dispose: () => void;
@@ -20,7 +48,7 @@ const FACE_COLORS = [
  * renderer 负责把 scene + camera 的结果绘制到页面 canvas 上。
  */
 function createRenderer(canvas: HTMLCanvasElement) {
-  const renderer = new THREE.WebGLRenderer({
+  const renderer = new WebGLRenderer({
     antialias: true,
     canvas,
   });
@@ -28,7 +56,7 @@ function createRenderer(canvas: HTMLCanvasElement) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x111827);
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.shadowMap.type = PCFShadowMap;
 
   return renderer;
 }
@@ -37,7 +65,7 @@ function createRenderer(canvas: HTMLCanvasElement) {
  * 创建观察整个灯光演示场景的透视相机。
  */
 function createCamera() {
-  const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 200);
+  const camera = new PerspectiveCamera(55, 1, 0.1, 200);
 
   camera.position.set(16, 12, 18);
   camera.lookAt(0, 1, 0);
@@ -50,7 +78,7 @@ function createCamera() {
  *
  * maxPolarAngle 限制相机最多旋转到接近水平视角，避免拖到地面以下。
  */
-function createControls(camera: THREE.PerspectiveCamera, canvas: HTMLCanvasElement) {
+function createControls(camera: PerspectiveCamera, canvas: HTMLCanvasElement) {
   const controls = new OrbitControls(camera, canvas);
 
   controls.target.set(0, 1, 0);
@@ -88,10 +116,10 @@ function createStats(container: HTMLElement) {
  */
 function createLights(): LightSet {
   // 环境光：均匀照亮所有受光材质，不产生方向和阴影。
-  const ambient = new THREE.AmbientLight(0xffffff, 1);
+  const ambient = new AmbientLight(0xffffff, 1);
 
   // 方向光：类似太阳光，适合做主光和阴影。
-  const directional = new THREE.DirectionalLight(0xffffff, 1.5);
+  const directional = new DirectionalLight(0xffffff, 1.5);
   directional.position.set(-10, 14, 8);
   directional.castShadow = true;
   directional.shadow.mapSize.set(1024, 1024);
@@ -103,18 +131,18 @@ function createLights(): LightSet {
   directional.shadow.camera.bottom = -16;
 
   // 点光源：从一个点向四周发光，适合模拟灯泡、火光等局部光。
-  const point = new THREE.PointLight(0xff7a45, 2, 45);
+  const point = new PointLight(0xff7a45, 2, 45);
   point.position.set(0, 0, 6);
   point.castShadow = true;
 
   // 聚光灯：只照亮一个锥形区域，类似手电筒或舞台灯。
-  const spot = new THREE.SpotLight(0x7dd3fc, 2.5, 60, Math.PI / 7, 0.35, 1);
+  const spot = new SpotLight(0x7dd3fc, 2.5, 60, Math.PI / 7, 0.35, 1);
   spot.position.set(0, 14, -10);
   spot.target.position.set(0, 0, 0);
   spot.castShadow = true;
 
   // 半球光：有天空色和地面色，适合做户外环境补光，不投射阴影。
-  const hemisphere = new THREE.HemisphereLight(0x8ec5ff, 0x2f3a24, 0.9);
+  const hemisphere = new HemisphereLight(0x8ec5ff, 0x2f3a24, 0.9);
 
   return {
     ambient,
@@ -148,26 +176,26 @@ function createHexadecahedronGeometry(radius: number) {
     indices.push(1, next, current);
   }
 
-  return new THREE.PolyhedronGeometry(vertices, indices, radius, 0);
+  return new PolyhedronGeometry(vertices, indices, radius, 0);
 }
 
 function createFaceColoredPyramid(radialSegments: number) {
-  const geometry = new THREE.ConeGeometry(1.45, 2.8, radialSegments).toNonIndexed();
+  const geometry = new ConeGeometry(1.45, 2.8, radialSegments).toNonIndexed();
   const position = geometry.getAttribute('position');
   const colors: number[] = [];
 
   for (let vertexIndex = 0; vertexIndex < position.count; vertexIndex++) {
     const faceIndex = Math.floor(vertexIndex / 3);
-    const color = new THREE.Color(FACE_COLORS[faceIndex % FACE_COLORS.length]);
+    const color = new Color(FACE_COLORS[faceIndex % FACE_COLORS.length]);
 
     colors.push(color.r, color.g, color.b);
   }
 
-  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+  geometry.setAttribute('color', new Float32BufferAttribute(colors, 3));
 
-  return new THREE.Mesh(
+  return new Mesh(
     geometry,
-    new THREE.MeshStandardMaterial({
+    new MeshStandardMaterial({
       roughness: 0.42,
       metalness: 0.08,
       vertexColors: true,
@@ -176,53 +204,50 @@ function createFaceColoredPyramid(radialSegments: number) {
 }
 
 function createObjects() {
-  const blueMaterial = new THREE.MeshStandardMaterial({
+  const blueMaterial = new MeshStandardMaterial({
     color: 0x4f9cff,
     roughness: 0.35,
     metalness: 0.18,
   });
-  const orangeMaterial = new THREE.MeshStandardMaterial({
+  const orangeMaterial = new MeshStandardMaterial({
     color: 0xf97316,
     roughness: 0.42,
     metalness: 0.08,
   });
-  const greenMaterial = new THREE.MeshStandardMaterial({
+  const greenMaterial = new MeshStandardMaterial({
     color: 0x22c55e,
     roughness: 0.45,
     metalness: 0.05,
   });
-  const violetMaterial = new THREE.MeshStandardMaterial({
+  const violetMaterial = new MeshStandardMaterial({
     color: 0xa78bfa,
     roughness: 0.38,
     metalness: 0.12,
   });
-  const groundMaterial = new THREE.MeshStandardMaterial({
+  const groundMaterial = new MeshStandardMaterial({
     color: 0x334155,
     roughness: 0.9,
     metalness: 0,
   });
 
-  const cube = new THREE.Mesh(new THREE.BoxGeometry(2.6, 2.6, 2.6), blueMaterial);
-  const sphere = new THREE.Mesh(new THREE.SphereGeometry(1.35, 48, 24), orangeMaterial);
-  const cone = new THREE.Mesh(new THREE.ConeGeometry(1.35, 3, 48), greenMaterial);
-  const cylinder = new THREE.Mesh(new THREE.CylinderGeometry(1.25, 1.25, 2.8, 48), violetMaterial);
-  const octahedron = new THREE.Mesh(new THREE.OctahedronGeometry(1.6), blueMaterial.clone());
-  const hexadecahedron = new THREE.Mesh(createHexadecahedronGeometry(1.6), orangeMaterial.clone());
-  const hemisphere = new THREE.Mesh(
-    new THREE.SphereGeometry(1.45, 48, 18, 0, Math.PI * 2, 0, Math.PI / 2),
+  const cube = new Mesh(new BoxGeometry(2.6, 2.6, 2.6), blueMaterial);
+  const sphere = new Mesh(new SphereGeometry(1.35, 48, 24), orangeMaterial);
+  const cone = new Mesh(new ConeGeometry(1.35, 3, 48), greenMaterial);
+  const cylinder = new Mesh(new CylinderGeometry(1.25, 1.25, 2.8, 48), violetMaterial);
+  const octahedron = new Mesh(new OctahedronGeometry(1.6), blueMaterial.clone());
+  const hexadecahedron = new Mesh(createHexadecahedronGeometry(1.6), orangeMaterial.clone());
+  const hemisphere = new Mesh(
+    new SphereGeometry(1.45, 48, 18, 0, Math.PI * 2, 0, Math.PI / 2),
     greenMaterial.clone(),
   );
-  const torus = new THREE.Mesh(new THREE.TorusGeometry(1.05, 0.32, 24, 72), violetMaterial.clone());
-  const dodecahedron = new THREE.Mesh(new THREE.DodecahedronGeometry(1.45), blueMaterial.clone());
-  const capsule = new THREE.Mesh(
-    new THREE.CapsuleGeometry(0.8, 1.7, 12, 24),
-    orangeMaterial.clone(),
-  );
+  const torus = new Mesh(new TorusGeometry(1.05, 0.32, 24, 72), violetMaterial.clone());
+  const dodecahedron = new Mesh(new DodecahedronGeometry(1.45), blueMaterial.clone());
+  const capsule = new Mesh(new CapsuleGeometry(0.8, 1.7, 12, 24), orangeMaterial.clone());
   const triangularPyramid = createFaceColoredPyramid(3);
   const squarePyramid = createFaceColoredPyramid(4);
   const pentagonalPyramid = createFaceColoredPyramid(5);
   const hexagonalPyramid = createFaceColoredPyramid(6);
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(48, 48), groundMaterial);
+  const ground = new Mesh(new PlaneGeometry(48, 48), groundMaterial);
   const displayMeshes = [
     cube,
     sphere,
@@ -289,15 +314,15 @@ function createObjects() {
 /**
  * 随机创建一批长方体，用来观察模型数量增加后 Stats 面板的 FPS/MS 变化。
  */
-function createStressBoxes(scene: THREE.Scene, count: number): StressBoxes {
-  const geometry = new THREE.BoxGeometry(5, 5, 5);
-  const material = new THREE.MeshLambertMaterial({
+function createStressBoxes(scene: Scene, count: number): StressBoxes {
+  const geometry = new BoxGeometry(5, 5, 5);
+  const material = new MeshLambertMaterial({
     color: 0x00ffff,
   });
-  const meshes: THREE.Mesh[] = [];
+  const meshes: Mesh[] = [];
 
   for (let i = 0; i < count; i++) {
-    const mesh = new THREE.Mesh(geometry, material);
+    const mesh = new Mesh(geometry, material);
     const x = (Math.random() - 0.5) * 200;
     const y = (Math.random() - 0.5) * 200;
     const z = (Math.random() - 0.5) * 200;
@@ -338,14 +363,14 @@ export function createLightDemoScene(
   initialStressBoxCount: number,
 ) {
   const renderer = createRenderer(canvas);
-  const scene = new THREE.Scene();
+  const scene = new Scene();
   const camera = createCamera();
   const controls = createControls(camera, canvas);
   const stats = createStats(canvas.parentElement ?? document.body);
   const lights = createLights();
   const objects = createObjects();
-  const gridHelper = new THREE.GridHelper(48, 24);
-  const axesHelper = new THREE.AxesHelper(8);
+  const gridHelper = new GridHelper(48, 24);
+  const axesHelper = new AxesHelper(8);
   let stressBoxes = createStressBoxes(scene, initialStressBoxCount);
 
   // 初始化时先应用一次 UI 状态，保证第一帧就是正确的光源开关组合。
@@ -355,7 +380,7 @@ export function createLightDemoScene(
   Object.values(lights).forEach((light) => {
     scene.add(light);
   });
-  scene.add((lights.spot as THREE.SpotLight).target);
+  scene.add((lights.spot as SpotLight).target);
   objects.meshes.forEach((mesh) => {
     scene.add(mesh);
   });

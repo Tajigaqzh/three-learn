@@ -1,4 +1,32 @@
-import * as THREE from 'three';
+import {
+  AmbientLight,
+  BufferGeometry,
+  EllipseCurve,
+  Float32BufferAttribute,
+  Group,
+  LineBasicMaterial,
+  LineLoop,
+  MathUtils,
+  Mesh,
+  MeshBasicMaterial,
+  MeshStandardMaterial,
+  MOUSE,
+  Object3D,
+  PCFShadowMap,
+  PerspectiveCamera,
+  PointLight,
+  Points,
+  PointsMaterial,
+  Raycaster,
+  Scene,
+  SphereGeometry,
+  SRGBColorSpace,
+  TextureLoader,
+  Timer,
+  Vector2,
+  Vector3,
+  WebGLRenderer,
+} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import earthTextureUrl from './assets/earth.jpeg';
 import moonTextureUrl from './assets/moon.png';
@@ -44,8 +72,8 @@ const FOCUS_DISTANCE = {
 // 初始视角是“太阳系总览构图”：视线中心在太阳和地球之间。
 // 这样首屏能同时看到太阳、地球、月球，而不是只盯着某一个天体。
 const INITIAL_VIEW = {
-  target: new THREE.Vector3(10, 0, 0),
-  cameraPosition: new THREE.Vector3(10, 24, 56),
+  target: new Vector3(10, 0, 0),
+  cameraPosition: new Vector3(10, 24, 56),
 };
 
 /**
@@ -54,7 +82,7 @@ const INITIAL_VIEW = {
  * 渲染器负责把 Three.js 场景真正绘制到浏览器画布上。
  */
 function createRenderer(canvas: HTMLCanvasElement) {
-  const renderer = new THREE.WebGLRenderer({
+  const renderer = new WebGLRenderer({
     antialias: true,
     canvas,
   });
@@ -63,7 +91,7 @@ function createRenderer(canvas: HTMLCanvasElement) {
   renderer.setClearColor(0x020617);
   // 开启阴影后，地球和月球可以互相投射/接收阴影，光照关系更清楚。
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.shadowMap.type = PCFShadowMap;
 
   return renderer;
 }
@@ -74,7 +102,7 @@ function createRenderer(canvas: HTMLCanvasElement) {
  * 相机的位置和朝向使用 INITIAL_VIEW，形成能同时看到太阳、地球、月球的总览视角。
  */
 function createCamera() {
-  const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 300);
+  const camera = new PerspectiveCamera(50, 1, 0.1, 300);
 
   camera.position.copy(INITIAL_VIEW.cameraPosition);
   camera.lookAt(INITIAL_VIEW.target);
@@ -87,7 +115,7 @@ function createCamera() {
  *
  * OrbitControls 负责鼠标拖拽、滚轮缩放、旋转和平移视口。
  */
-function createControls(camera: THREE.PerspectiveCamera, canvas: HTMLCanvasElement) {
+function createControls(camera: PerspectiveCamera, canvas: HTMLCanvasElement) {
   const controls = new OrbitControls(camera, canvas);
 
   // OrbitControls 的 target 是“相机围绕/平移参考的中心点”。
@@ -105,9 +133,9 @@ function createControls(camera: THREE.PerspectiveCamera, canvas: HTMLCanvasEleme
   // 3. 右键拖拽：旋转。
   // 4. 滚轮：缩放。
   controls.mouseButtons = {
-    LEFT: THREE.MOUSE.PAN,
-    MIDDLE: THREE.MOUSE.DOLLY,
-    RIGHT: THREE.MOUSE.ROTATE,
+    LEFT: MOUSE.PAN,
+    MIDDLE: MOUSE.DOLLY,
+    RIGHT: MOUSE.ROTATE,
   };
   controls.update();
 
@@ -127,7 +155,7 @@ function createOrbitRing(radius: number, color: number) {
   // 1. 前两个 0, 0：椭圆中心点在局部坐标系的 (0, 0)。
   // 2. radius, radius：X 方向半径和 Y 方向半径相同，所以它实际是一个圆。
   // 这里先在 XY 平面创建圆，是因为 EllipseCurve 本身生成的是二维点。
-  const curve = new THREE.EllipseCurve(0, 0, radius, radius);
+  const curve = new EllipseCurve(0, 0, radius, radius);
 
   // getPoints(160) 表示沿着圆周取 160 个点。
   // 点越多，轨道线越圆滑；点越少，轨道线越像多边形。
@@ -136,11 +164,11 @@ function createOrbitRing(radius: number, color: number) {
 
   // BufferGeometry 是 Three.js 里高性能的几何体格式。
   // setFromPoints 会把上面采样得到的一组点转换成 GPU 可以绘制的顶点数据。
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
+  const geometry = new BufferGeometry().setFromPoints(points);
 
   // LineBasicMaterial 是专门给线条用的基础材质。
   // transparent + opacity 让轨道线半透明，不会抢走太阳、地球、月球的视觉重点。
-  const material = new THREE.LineBasicMaterial({
+  const material = new LineBasicMaterial({
     color,
     transparent: true,
     opacity: 0.45,
@@ -148,7 +176,7 @@ function createOrbitRing(radius: number, color: number) {
 
   // LineLoop 会按照点的顺序连线，并自动把最后一个点连回第一个点。
   // 这样就形成了一条闭合的圆形轨道线。
-  const ring = new THREE.LineLoop(geometry, material);
+  const ring = new LineLoop(geometry, material);
 
   // EllipseCurve 生成的圆默认躺在 XY 平面，也就是像一张竖起来的纸。
   // 太阳系里地球绕太阳运动主要发生在 XZ 平面，所以这里绕 X 轴旋转 90 度。
@@ -164,7 +192,7 @@ function createOrbitRing(radius: number, color: number) {
  * 星星由一批随机分布在远处的点组成，不参与动画和光照。
  */
 function createStars() {
-  const geometry = new THREE.BufferGeometry();
+  const geometry = new BufferGeometry();
   const positions: number[] = [];
 
   // 随机生成一批较远的点，作为静态星空背景。
@@ -180,15 +208,15 @@ function createStars() {
     );
   }
 
-  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
 
-  const material = new THREE.PointsMaterial({
+  const material = new PointsMaterial({
     color: 0xe5e7eb,
     size: 0.36,
     sizeAttenuation: true,
   });
 
-  return new THREE.Points(geometry, material);
+  return new Points(geometry, material);
 }
 
 /**
@@ -200,23 +228,23 @@ export function createSolarSystemScene(canvas: HTMLCanvasElement) {
   // 创建 Three.js 场景所需的核心对象：
   // renderer 负责画面输出，scene 是世界容器，camera 是观察这个世界的相机。
   const renderer = createRenderer(canvas);
-  const scene = new THREE.Scene();
+  const scene = new Scene();
   const camera = createCamera();
   const controls = createControls(camera, canvas);
 
   // Timer 替代已废弃的 Clock，用来计算每一帧和上一帧之间经过了多少秒。
-  const timer = new THREE.Timer();
+  const timer = new Timer();
 
   // raycaster 用于“鼠标点选 3D 物体”。
   // 双击画布时，会用它判断用户点中了太阳、地球还是月球。
-  const raycaster = new THREE.Raycaster();
-  const pointer = new THREE.Vector2();
-  const targetPosition = new THREE.Vector3();
-  const viewDirection = new THREE.Vector3();
+  const raycaster = new Raycaster();
+  const pointer = new Vector2();
+  const targetPosition = new Vector3();
+  const viewDirection = new Vector3();
 
   // Vite 会把 import 进来的图片转换成最终可访问的资源 URL。
   // TextureLoader 再把这些 URL 加载成 Three.js 可用的纹理对象。
-  const textureLoader = new THREE.TextureLoader();
+  const textureLoader = new TextureLoader();
   const sunTexture = textureLoader.load(sunTextureUrl);
   const earthTexture = textureLoader.load(earthTextureUrl);
   const moonTexture = textureLoader.load(moonTextureUrl);
@@ -224,9 +252,9 @@ export function createSolarSystemScene(canvas: HTMLCanvasElement) {
   timer.connect(document);
 
   // PNG 贴图按 sRGB 解读，避免在 Three.js 线性空间里显示得发灰或偏暗。
-  sunTexture.colorSpace = THREE.SRGBColorSpace;
-  earthTexture.colorSpace = THREE.SRGBColorSpace;
-  moonTexture.colorSpace = THREE.SRGBColorSpace;
+  sunTexture.colorSpace = SRGBColorSpace;
+  earthTexture.colorSpace = SRGBColorSpace;
+  moonTexture.colorSpace = SRGBColorSpace;
   sunTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
   earthTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
   moonTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
@@ -247,22 +275,22 @@ export function createSolarSystemScene(canvas: HTMLCanvasElement) {
   //       moonOrbitRing 月球轨道线，只负责显示月球绕地球的轨道
   //
   // earthOrbitRing 是地球轨道线，直接加到 scene 里，固定显示在太阳周围。
-  const solarSystem = new THREE.Group();
-  const earthOrbitPivot = new THREE.Group();
-  const earthGroup = new THREE.Group();
-  const moonOrbitPivot = new THREE.Group();
-  const moonGroup = new THREE.Group();
+  const solarSystem = new Group();
+  const earthOrbitPivot = new Group();
+  const earthGroup = new Group();
+  const moonOrbitPivot = new Group();
+  const moonGroup = new Group();
 
-  const sun = new THREE.Mesh(
-    new THREE.SphereGeometry(BODY_SIZE.sunRadius, 64, 32),
-    new THREE.MeshBasicMaterial({
+  const sun = new Mesh(
+    new SphereGeometry(BODY_SIZE.sunRadius, 64, 32),
+    new MeshBasicMaterial({
       color: 0xffffff,
       map: sunTexture,
     }),
   );
-  const earth = new THREE.Mesh(
-    new THREE.SphereGeometry(BODY_SIZE.earthRadius, 48, 24),
-    new THREE.MeshStandardMaterial({
+  const earth = new Mesh(
+    new SphereGeometry(BODY_SIZE.earthRadius, 48, 24),
+    new MeshStandardMaterial({
       color: 0xffffff,
       map: earthTexture,
       roughness: 0.62,
@@ -270,9 +298,9 @@ export function createSolarSystemScene(canvas: HTMLCanvasElement) {
       emissive: 0x020617,
     }),
   );
-  const moon = new THREE.Mesh(
-    new THREE.SphereGeometry(BODY_SIZE.moonRadius, 32, 16),
-    new THREE.MeshStandardMaterial({
+  const moon = new Mesh(
+    new SphereGeometry(BODY_SIZE.moonRadius, 32, 16),
+    new MeshStandardMaterial({
       color: 0xffffff,
       map: moonTexture,
       roughness: 0.78,
@@ -284,8 +312,8 @@ export function createSolarSystemScene(canvas: HTMLCanvasElement) {
   const stars = createStars();
 
   // 太阳作为点光源，从中心向四周发光；地球和月球的亮面都由这个光源决定。
-  const sunLight = new THREE.PointLight(0xffffff, 2600, 180, 2);
-  const ambientLight = new THREE.AmbientLight(0x1e293b, 0.25);
+  const sunLight = new PointLight(0xffffff, 2600, 180, 2);
+  const ambientLight = new AmbientLight(0x1e293b, 0.25);
 
   sunLight.castShadow = true;
   sunLight.shadow.mapSize.set(1024, 1024);
@@ -306,7 +334,7 @@ export function createSolarSystemScene(canvas: HTMLCanvasElement) {
   moonGroup.position.set(ORBIT_RADIUS.moon, 0, 0);
 
   // 地球自转轴倾斜约 23.5 度，让视觉效果更接近真实地球。
-  earthGroup.rotation.z = THREE.MathUtils.degToRad(23.5);
+  earthGroup.rotation.z = MathUtils.degToRad(23.5);
 
   // 按父子关系把对象装进 Group。
   // 这部分顺序决定了“谁跟着谁一起动”。
@@ -344,7 +372,7 @@ export function createSolarSystemScene(canvas: HTMLCanvasElement) {
    *
    * 这里不会持续绑定目标天体，所以跳转后用户仍然可以自由平移、旋转和缩放。
    */
-  const focusObject = (object: THREE.Object3D, distance?: number) => {
+  const focusObject = (object: Object3D, distance?: number) => {
     object.getWorldPosition(targetPosition);
     // 只做一次性跳转：移动相机和 OrbitControls target，不把视口持续绑定到天体。
     // getWorldPosition 能拿到天体在整个场景里的真实位置，即使它被放在多层 Group 里面。
@@ -359,7 +387,7 @@ export function createSolarSystemScene(canvas: HTMLCanvasElement) {
   /**
    * 根据天体大小返回合适的双击观察距离。
    */
-  const getFocusDistance = (object: THREE.Object3D) => {
+  const getFocusDistance = (object: Object3D) => {
     // 不同天体半径不同，双击聚焦时需要不同观察距离。
     if (object === sun) return FOCUS_DISTANCE.sun;
     if (object === earth) return FOCUS_DISTANCE.earth;

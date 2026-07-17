@@ -20,6 +20,10 @@ export const routes = [
     element: createElement(lazy(() => import('@/pages/solarSystem/SolarSystemScenePage'))),
   },
   {
+    path: 'solar',
+    element: createElement(lazy(() => import('@/pages/solarSelf/index.tsx'))),
+  },
+  {
     path: '*',
     element: <NotFoundPage />,
   },

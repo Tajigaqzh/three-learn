@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import { BoxGeometry, CanvasTexture, Mesh, MeshBasicMaterial, SRGBColorSpace } from 'three';
 
 type CubeFaceConfig = {
   number: number;
@@ -75,13 +75,13 @@ function createCubeFaceTexture({ number, backgroundColor, textColor }: CubeFaceC
   context.textBaseline = 'middle';
   context.fillText(String(number), size / 2, size / 2 + 8);
 
-  const texture = new THREE.CanvasTexture(canvas);
+  const texture = new CanvasTexture(canvas);
 
   /**
    * Canvas 里的颜色通常按 sRGB 理解。
    * 显式设置 colorSpace 可以让贴图颜色在 Three.js 中更接近 canvas 上画出的颜色。
    */
-  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.colorSpace = SRGBColorSpace;
 
   return texture;
 }
@@ -97,7 +97,7 @@ function createCubeFaceTexture({ number, backgroundColor, textColor }: CubeFaceC
  */
 export function createCube() {
   // BoxGeometry(width, height, depth)：创建宽高深都为 1 的立方体几何形状。
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const geometry = new BoxGeometry(1, 1, 1);
 
   /**
    * 每个面的贴图都对应一个 MeshBasicMaterial。
@@ -106,7 +106,7 @@ export function createCube() {
    * 这对初学示例很友好：即使场景里没有 Light，也能直接看到颜色和数字。
    */
   const faceTextures = CUBE_FACE_CONFIGS.map(createCubeFaceTexture);
-  const materials = faceTextures.map((texture) => new THREE.MeshBasicMaterial({ map: texture }));
+  const materials = faceTextures.map((texture) => new MeshBasicMaterial({ map: texture }));
 
   /**
    * Mesh 是真正放进场景里的对象。后续旋转、移动、缩放也都是操作这个 mesh。
@@ -114,7 +114,7 @@ export function createCube() {
    * 第二个参数传材质数组时，BoxGeometry 会把数组里的 6 个材质分别应用到 6 个面。
    * 这就是“每个面不同颜色、不同数字”的关键。
    */
-  const mesh = new THREE.Mesh(geometry, materials);
+  const mesh = new Mesh(geometry, materials);
 
   /**
    * 稍微给立方体一个初始角度。

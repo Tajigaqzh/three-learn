@@ -1,5 +1,5 @@
-import * as THREE from 'three';
+import { Scene } from 'three';
 
 export function createScene() {
-  return new THREE.Scene();
+  return new Scene();
 }

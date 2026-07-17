@@ -1,18 +1,18 @@
-import * as THREE from 'three';
+import { Camera, Scene, Timer, WebGLRenderer } from 'three';
 
 type CreateRenderLoopParams = {
-  renderer: THREE.WebGLRenderer;
-  scene: THREE.Scene;
-  camera: THREE.Camera;
+  renderer: WebGLRenderer;
+  scene: Scene;
+  camera: Camera;
   renderTasks?: RenderTask[];
 };
 
 export type RenderContext = {
   delta: number;
   elapsedTime: number;
-  renderer: THREE.WebGLRenderer;
-  scene: THREE.Scene;
-  camera: THREE.Camera;
+  renderer: WebGLRenderer;
+  scene: Scene;
+  camera: Camera;
 };
 
 /**
@@ -65,7 +65,7 @@ export function createRenderLoop({
    * delta：上一帧到当前帧经过了多少秒，常用于计算动画速度。
    * elapsedTime：动画循环开始后累计经过了多少秒，常用于周期动画。
    */
-  const timer = new THREE.Timer();
+  const timer = new Timer();
 
   /**
    * 任务排序只需要在创建渲染循环时做一次。

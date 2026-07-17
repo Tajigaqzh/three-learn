@@ -1,13 +1,13 @@
-import * as THREE from 'three';
+import { Mesh, MeshStandardMaterial, PlaneGeometry } from 'three';
 
 export function createGround() {
-  const geometry = new THREE.PlaneGeometry(3000, 3000);
-  const material = new THREE.MeshStandardMaterial({
+  const geometry = new PlaneGeometry(3000, 3000);
+  const material = new MeshStandardMaterial({
     color: 0x444444,
     roughness: 0.8,
     metalness: 0,
   });
-  const mesh = new THREE.Mesh(geometry, material);
+  const mesh = new Mesh(geometry, material);
 
   mesh.rotation.x = -Math.PI / 2;
   mesh.position.y = -5;

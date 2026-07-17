@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import { PCFShadowMap, PerspectiveCamera, WebGLRenderer } from 'three';
 
 /**
  * 创建 WebGL 渲染器。
@@ -7,7 +7,7 @@ import * as THREE from 'three';
  * 它会读取 scene、camera，然后把 camera 看到的 3D 画面绘制到 canvas 上。
  */
 export function createRenderer(canvas: HTMLCanvasElement) {
-  const renderer = new THREE.WebGLRenderer({
+  const renderer = new WebGLRenderer({
     /**
      * antialias 开启抗锯齿。
      * 立方体边缘是斜线时，如果不开抗锯齿，边缘可能会有明显阶梯状锯齿。
@@ -21,7 +21,7 @@ export function createRenderer(canvas: HTMLCanvasElement) {
   // 1. 开启阴影支持
   renderer.shadowMap.enabled = true;
   // PCFSoftShadowMap 能让阴影边缘带有模糊过渡，这是提升真实感的关键
-  renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.shadowMap.type = PCFShadowMap;
 
   // 使用深灰色代替纯黑色，能更好地衬托出物体的明暗交界线，避免暗部细节丢失
   renderer.setClearColor(0x262626);
@@ -43,8 +43,8 @@ export function createRenderer(canvas: HTMLCanvasElement) {
  * 两者同步后，画面才不会模糊、拉伸或比例错误。
  */
 export function resizeRendererToCanvas(
-  renderer: THREE.WebGLRenderer,
-  camera: THREE.PerspectiveCamera,
+  renderer: WebGLRenderer,
+  camera: PerspectiveCamera,
   canvas: HTMLCanvasElement,
 ) {
   // clientWidth/clientHeight 是 canvas 元素在页面中的 CSS 像素尺寸。
