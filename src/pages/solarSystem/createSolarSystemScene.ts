@@ -346,6 +346,7 @@ export function createSolarSystemScene(canvas: HTMLCanvasElement) {
   earthOrbitPivot.add(earthGroup);
   solarSystem.add(sun);
   solarSystem.add(earthOrbitPivot);
+
   scene.add(solarSystem);
   scene.add(earthOrbitRing);
   scene.add(stars);

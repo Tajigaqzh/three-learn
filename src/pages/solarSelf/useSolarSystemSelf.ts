@@ -1,8 +1,16 @@
 import { type RefObject, useEffect } from 'react';
 import {
+  AmbientLight,
+  Group,
+  MathUtils,
+  Mesh,
+  MeshBasicMaterial,
+  MeshStandardMaterial,
   PCFShadowMap,
   PerspectiveCamera,
+  PointLight,
   Scene,
+  SphereGeometry,
   SRGBColorSpace,
   TextureLoader,
   Timer,
@@ -62,10 +70,88 @@ function createSolarSystemScene(canvas: HTMLCanvasElement) {
   earthTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
   moonTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
+  const solarSystem = new Group();
+  const earthRotateGroup = new Group();
+  const earthGroup = new Group();
+  const moonRotateGroup = new Group();
+  const moonGroup = new Group();
+
+  const sun = new Mesh(
+    new SphereGeometry(8, 64, 32),
+    new MeshBasicMaterial({
+      color: 0xffffff,
+      map: sunTexture,
+    }),
+  );
+
+  const earth = new Mesh(
+    new SphereGeometry(1.25, 48, 24),
+    new MeshStandardMaterial({
+      color: 0xffffff,
+      map: earthTexture,
+      roughness: 0.62,
+      metalness: 0,
+      emissive: 0x020617,
+    }),
+  );
+
+  const moon = new Mesh(
+    new SphereGeometry(0.36, 32, 16),
+    new MeshStandardMaterial({
+      color: 0xffffff,
+      map: moonTexture,
+      roughness: 0.78,
+      metalness: 0,
+    }),
+  );
+
+  // 太阳作为点光源，从中心向四周发光；地球和月球的亮面都由这个光源决定。
+  const sunLight = new PointLight(0xffffff, 2600, 180, 2);
+  const ambientLight = new AmbientLight(0x1e293b, 0.25);
+
+  sunLight.castShadow = true;
+  sunLight.shadow.mapSize.set(1024, 1024);
+  sunLight.shadow.camera.near = 1;
+  sunLight.shadow.camera.far = 120;
+
+  earth.castShadow = true;
+  earth.receiveShadow = true;
+  moon.castShadow = true;
+  moon.receiveShadow = true;
+
+  earthGroup.position.set(24, 0, 0);
+  moonGroup.position.set(3.1, 0, 0);
+  earthGroup.rotation.z = MathUtils.degToRad(23.5);
+
+  moonGroup.add(moon);
+  moonRotateGroup.add(moonGroup);
+
+  earthGroup.add(earth);
+
+  earthGroup.add(moonRotateGroup);
+
+  earthRotateGroup.add(earthGroup);
+
+  solarSystem.add(sun);
+  solarSystem.add(earthRotateGroup);
+
+  scene.add(solarSystem);
+  // scene.add();
+
+  scene.add(sunLight);
+  scene.add(ambientLight);
+
   const render = (timestamp?: number) => {
     timer.update(timestamp);
     // delta 是“这一帧距离上一帧过去了多少秒”，用它能让动画速度不依赖帧率。
-    // const delta = timer.getDelta();
+    const delta = timer.getDelta();
+
+    sun.rotation.y += delta * 0.05;
+    earth.rotation.y += delta * 0.28;
+    moon.rotation.y += delta * 0.1;
+
+    earthRotateGroup.rotation.y += delta * 0.035;
+    moonRotateGroup.rotation.y += delta * 0.24;
 
     renderer.render(scene, camera);
   };
