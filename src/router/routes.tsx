@@ -1,10 +1,14 @@
-import type { RouteObject } from 'react-router-dom';
+import { Navigate, type RouteObject } from 'react-router-dom';
 import { NotFoundPage } from '@/pages/notFound/NotFoundPage.tsx';
 import { createElement, lazy } from 'react';
 
 export const routes = [
   {
     path: '/',
+    element: <Navigate to="/material" replace />,
+  },
+  {
+    path: '/basic',
     element: createElement(lazy(() => import('@/pages/basicCube/CubeScenePage'))),
   },
   {
@@ -20,8 +24,12 @@ export const routes = [
     element: createElement(lazy(() => import('@/pages/solarSystem/SolarSystemScenePage'))),
   },
   {
-    path: 'solar',
+    path: '/solar',
     element: createElement(lazy(() => import('@/pages/solarSelf/index.tsx'))),
+  },
+  {
+    path: '/material',
+    element: createElement(lazy(() => import('@/pages/material/index'))),
   },
   {
     path: '*',
