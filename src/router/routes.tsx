@@ -1,5 +1,4 @@
 import type { RouteObject } from 'react-router-dom';
-import { NotFoundPage } from '@/pages/notFound/NotFoundPage.tsx';
 import { createElement, lazy } from 'react';
 
 export const routes = [
@@ -25,6 +24,6 @@ export const routes = [
   },
   {
     path: '*',
-    element: <NotFoundPage />,
+    element: createElement(lazy(() => import('@/pages/notFound/NotFoundPage'))),
   },
 ] satisfies RouteObject[];
