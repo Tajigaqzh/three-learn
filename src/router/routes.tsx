@@ -4,7 +4,7 @@ import { createElement, lazy } from 'react';
 export const routes = [
   {
     path: '/',
-    element: <Navigate to="/material" replace />,
+    element: <Navigate to="/gui" replace />,
   },
   {
     path: '/basic',
@@ -29,6 +29,10 @@ export const routes = [
   {
     path: '/material',
     element: createElement(lazy(() => import('@/pages/material/index'))),
+  },
+  {
+    path: '/gui',
+    element: createElement(lazy(() => import('@/pages/gui/index'))),
   },
   {
     path: '*',
