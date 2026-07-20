@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="360" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+  <title id="title">TypedArray views</title>
+  <desc id="desc">A diagram showing Uint8Array and Float32Array views over the same ArrayBuffer.</desc>
+  <rect width="920" height="360" fill="#f8fafc"/>
+  <text x="40" y="42" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#0f172a">TypedArray：用固定类型解释同一块内存</text>
+  <g transform="translate(68,86)">
+    <text x="0" y="20" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#1e3a8a">ArrayBuffer，16 bytes</text>
+    <rect x="0" y="36" width="784" height="42" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <g font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e3a8a">
+      <text x="24" y="62">0</text><text x="72" y="62">1</text><text x="120" y="62">2</text><text x="168" y="62">3</text>
+      <text x="216" y="62">4</text><text x="264" y="62">5</text><text x="312" y="62">6</text><text x="360" y="62">7</text>
+      <text x="408" y="62">8</text><text x="456" y="62">9</text><text x="504" y="62">10</text><text x="552" y="62">11</text>
+      <text x="600" y="62">12</text><text x="648" y="62">13</text><text x="696" y="62">14</text><text x="744" y="62">15</text>
+    </g>
+    <text x="0" y="122" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#166534">Uint8Array：每 1 byte 是一个元素</text>
+    <g transform="translate(0,138)">
+      <rect x="0" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="49" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="98" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="147" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="196" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="245" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="294" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="343" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="392" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="441" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="490" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="539" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="588" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="637" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="686" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+      <rect x="735" y="0" width="49" height="34" fill="#dcfce7" stroke="#16a34a"/>
+    </g>
+    <text x="0" y="220" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#92400e">Float32Array：每 4 bytes 是一个元素</text>
+    <g transform="translate(0,236)" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">
+      <rect x="0" y="0" width="196" height="42" fill="#fef3c7" stroke="#d97706"/>
+      <text x="98" y="27" fill="#92400e">float 0</text>
+      <rect x="196" y="0" width="196" height="42" fill="#fef3c7" stroke="#d97706"/>
+      <text x="294" y="27" fill="#92400e">float 1</text>
+      <rect x="392" y="0" width="196" height="42" fill="#fef3c7" stroke="#d97706"/>
+      <text x="490" y="27" fill="#92400e">float 2</text>
+      <rect x="588" y="0" width="196" height="42" fill="#fef3c7" stroke="#d97706"/>
+      <text x="686" y="27" fill="#92400e">float 3</text>
+    </g>
+  </g>
+</svg>

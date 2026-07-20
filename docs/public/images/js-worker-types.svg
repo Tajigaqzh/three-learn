@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="360" viewBox="0 0 980 360" role="img" aria-labelledby="title desc">
+  <title id="title">Web Worker types</title>
+  <desc id="desc">A diagram showing main thread with Dedicated Worker, Shared Worker and Service Worker, and their typical responsibilities.</desc>
+  <rect width="980" height="360" fill="#f8fafc"/>
+  <text x="40" y="44" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#0f172a">Web Worker 三种类型</text>
+  <rect x="54" y="132" width="150" height="74" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="129" y="164" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#991b1b">Main Thread</text>
+  <text x="129" y="186" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#991b1b">UI / 事件 / 绘制</text>
+  <rect x="300" y="68" width="182" height="90" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="391" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#1e3a8a">Dedicated Worker</text>
+  <text x="391" y="124" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#1e40af">一个页面专用</text>
+  <text x="391" y="144" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#1e40af">重计算 / OffscreenCanvas</text>
+  <rect x="300" y="214" width="182" height="90" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="391" y="246" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#166534">Shared Worker</text>
+  <text x="391" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#166534">同源多页面共享</text>
+  <text x="391" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#166534">共享状态 / 连接</text>
+  <rect x="650" y="132" width="198" height="90" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="749" y="164" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#92400e">Service Worker</text>
+  <text x="749" y="188" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#92400e">网络代理 / 缓存 / 离线</text>
+  <path d="M204 169 H300" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M204 169 C250 169 262 258 300 258" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M482 169 H650" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="488" y="92" font-family="Arial, sans-serif" font-size="13" fill="#1e40af">postMessage / Transferable</text>
+  <text x="488" y="242" font-family="Arial, sans-serif" font-size="13" fill="#166534">MessagePort / 共享连接</text>
+  <text x="488" y="146" font-family="Arial, sans-serif" font-size="13" fill="#92400e">注册后拦截 fetch</text>
+  <text x="54" y="320" font-family="Arial, sans-serif" font-size="15" fill="#334155">结论：离屏渲染和重计算优先 Dedicated Worker；跨页面共享优先 Shared Worker；缓存和离线优先 Service Worker。</text>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+  </defs>
+</svg>

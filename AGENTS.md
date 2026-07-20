@@ -53,6 +53,10 @@ command in `package.json` and this guide.
 
 Recent history uses short Conventional Commit-style subjects, for example `feat: add routed cube scenes` and `chore: add oxfmt and husky pre-commit checks`. Prefer `type: summary` with an imperative, specific summary.
 
+Before committing code, run formatting and `oxlint` on the touched files, or the
+project-level `pnpm fmt` and `pnpm lint` checks when a broader verification pass
+is appropriate.
+
 Pull requests should include the change purpose, key implementation notes, verification commands run, and screenshots or recordings for visible UI or Three.js scene changes.
 
 ## Agent-Specific Instructions

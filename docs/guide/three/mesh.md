@@ -170,6 +170,222 @@ mesh.rotation.x = -Math.PI / 2;
 | `PlaneGeometry`    | 平面            | 地面、墙面、图片面板 |
 | `TorusGeometry`    | 圆环            | 轮胎、圆环装饰       |
 
+## 自定义图形 BufferGeometry
+
+内置几何体不够用时，就要自己提供顶点数据。
+Three.js 里自定义图形通常用 `BufferGeometry`。
+
+最小的自定义图形是一个三角形：
+
+```ts
+const geometry = new THREE.BufferGeometry();
+
+const vertices = new Float32Array([
+  0,
+  1,
+  0, // 顶点 0
+  -1,
+  -1,
+  0, // 顶点 1
+  1,
+  -1,
+  0, // 顶点 2
+]);
+
+geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+
+const material = new THREE.MeshBasicMaterial({
+  color: 0x2196f3,
+  side: THREE.DoubleSide,
+});
+
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
+```
+
+这里最关键的是这一行：
+
+```ts
+geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+```
+
+含义是：
+
+- `position`：告诉 Three.js 这组数据是顶点坐标。
+- `vertices`：真正的顶点数组。
+- `3`：每 3 个数字组成一个顶点，也就是 `x, y, z`。
+
+```text
+Float32Array
+[0, 1, 0, -1, -1, 0, 1, -1, 0]
+
+按 3 个一组解释
+v0 = ( 0,  1, 0)
+v1 = (-1, -1, 0)
+v2 = ( 1, -1, 0)
+```
+
+`BufferGeometry` 不关心这些点“像不像三角形”。
+它只按顺序把每 3 个顶点组成一个三角面。
+
+```text
+v0
+ ▲
+ │\
+ │ \
+ │  \
+v1───v2
+```
+
+## 为什么用 Float32Array
+
+顶点坐标最终要交给 GPU。
+GPU 更适合读取连续、类型明确的二进制数据，而不是普通 JavaScript 数组。
+
+```ts
+const vertices = new Float32Array([0, 1, 0, -1, -1, 0, 1, -1, 0]);
+```
+
+`Float32Array` 的特点是：
+
+- 每个数字是 32 位浮点数。
+- 内存连续，适合传给 WebGL。
+- 类型固定，不能混入字符串、对象或其他类型。
+
+普通数组也能先写出来，但传给 `BufferAttribute` 时最好明确转成 `Float32Array`：
+
+```ts
+const vertices = [0, 1, 0, -1, -1, 0, 1, -1, 0];
+geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+```
+
+`Float32BufferAttribute` 是 Three.js 提供的简写，它会帮你创建合适的 buffer attribute。
+
+## 用索引复用顶点
+
+如果两个三角形拼成一个正方形，不使用索引时，需要写 6 个顶点：
+
+```ts
+const vertices = new Float32Array([
+  -1, 1, 0, -1, -1, 0, 1, -1, 0,
+
+  -1, 1, 0, 1, -1, 0, 1, 1, 0,
+]);
+```
+
+这里左上角和右下角各写了两次。
+更常见的写法是只写 4 个顶点，再用索引指定三角形怎么连：
+
+```ts
+const geometry = new THREE.BufferGeometry();
+
+const vertices = new Float32Array([
+  -1,
+  1,
+  0, // 0 左上
+  -1,
+  -1,
+  0, // 1 左下
+  1,
+  -1,
+  0, // 2 右下
+  1,
+  1,
+  0, // 3 右上
+]);
+
+const indices = new Uint16Array([
+  0,
+  1,
+  2, // 第一个三角形
+  0,
+  2,
+  3, // 第二个三角形
+]);
+
+geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+geometry.setIndex(new THREE.BufferAttribute(indices, 1));
+```
+
+```text
+0────3
+│   /│
+│  / │
+│ /  │
+1────2
+
+三角形 1: 0 -> 1 -> 2
+三角形 2: 0 -> 2 -> 3
+```
+
+索引用 `Uint16Array` 或 `Uint32Array`：
+
+| 类型          | 最大索引范围 | 适合场景             |
+| ------------- | ------------ | -------------------- |
+| `Uint16Array` | 0 到 65535   | 顶点数量不超过 65536 |
+| `Uint32Array` | 更大         | 顶点很多的大模型     |
+
+## 给自定义图形加 UV
+
+如果自定义几何体要贴图，还要提供 `uv`。
+UV 是二维坐标，范围通常是 `0 ~ 1`。
+
+```ts
+const uvs = new Float32Array([
+  0,
+  1, // 顶点 0
+  0,
+  0, // 顶点 1
+  1,
+  0, // 顶点 2
+  1,
+  1, // 顶点 3
+]);
+
+geometry.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+```
+
+这里的 `2` 表示每 2 个数字组成一个 UV 坐标，也就是 `u, v`。
+
+```text
+UV 空间
+(0,1)────(1,1)
+  │        │
+  │        │
+(0,0)────(1,0)
+```
+
+如果没有 `uv`，`material.map` 这类纹理就不知道怎么贴到表面上。
+
+## 法线 normal
+
+如果使用 `MeshStandardMaterial`、`MeshLambertMaterial`、`MeshPhongMaterial` 这类受光照影响的材质，还需要法线。
+
+法线表示表面朝向：
+
+```text
+      normal
+        ↑
+        │
+表面 ───┼───
+```
+
+简单平面可以手写法线：
+
+```ts
+const normals = new Float32Array([0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1]);
+
+geometry.setAttribute('normal', new THREE.BufferAttribute(normals, 3));
+```
+
+也可以让 Three.js 根据三角形自动计算：
+
+```ts
+geometry.computeVertexNormals();
+```
+
+如果你发现自定义模型在光照下很黑、明暗不对，先检查有没有 `normal`。
+
 ## Mesh 的位置、旋转和缩放
 
 `Mesh` 继承自 `Object3D`，所以可以控制位置、旋转和缩放：
@@ -187,6 +403,47 @@ mesh.scale.set(1, 1, 1);
 - `scale`：物体缩放比例。
 
 如果物体有动画，通常会在每一帧修改这些属性，然后重新渲染。
+
+## Mesh 常用配置
+
+`Mesh` 继承自 `Object3D`，所以常用配置不只包括 `geometry` 和 `material`。
+
+| 属性 / 方法     | 作用                             | 常见写法                         |
+| --------------- | -------------------------------- | -------------------------------- |
+| `position`      | 控制物体位置。                   | `mesh.position.set(0, 2, 0);`    |
+| `rotation`      | 控制物体旋转，单位是弧度。       | `mesh.rotation.y = Math.PI / 2;` |
+| `scale`         | 控制物体缩放。                   | `mesh.scale.set(2, 1, 2);`       |
+| `visible`       | 控制是否显示。                   | `mesh.visible = false;`          |
+| `name`          | 给物体命名，方便调试和查找。     | `mesh.name = 'player';`          |
+| `castShadow`    | 是否投射阴影。                   | `mesh.castShadow = true;`        |
+| `receiveShadow` | 是否接收阴影。                   | `mesh.receiveShadow = true;`     |
+| `material`      | 当前材质，可运行时替换。         | `mesh.material = newMaterial;`   |
+| `geometry`      | 当前几何体，可运行时替换。       | `mesh.geometry = newGeometry;`   |
+| `userData`      | 挂载自定义业务数据。             | `mesh.userData.type = 'enemy';`  |
+| `renderOrder`   | 控制渲染顺序。                   | `mesh.renderOrder = 10;`         |
+| `frustumCulled` | 是否启用视锥裁剪。               | `mesh.frustumCulled = false;`    |
+| `layers`        | 控制相机、光线投射等分层可见性。 | `mesh.layers.set(1);`            |
+| `add()`         | 给当前物体添加子物体。           | `mesh.add(childMesh);`           |
+| `remove()`      | 移除子物体。                     | `mesh.remove(childMesh);`        |
+| `traverse()`    | 遍历自己和所有子物体。           | `mesh.traverse((obj) => {});`    |
+| `lookAt()`      | 让物体朝向某个点。               | `mesh.lookAt(0, 0, 0);`          |
+
+常见用法示例：
+
+```ts
+mesh.name = 'ground';
+mesh.position.set(0, -1, 0);
+mesh.rotation.x = -Math.PI / 2;
+mesh.receiveShadow = true;
+mesh.userData.kind = 'floor';
+```
+
+需要注意：
+
+- `visible = false` 会隐藏物体和它的子物体。
+- `renderOrder` 主要用于透明物体、UI 面板等特殊排序场景，不建议到处设置。
+- `frustumCulled = false` 会让物体即使在相机视野外也参与渲染判断，通常只在特殊对象上用。
+- `userData` 适合放业务标记，不适合放复杂逻辑。
 
 ## Mesh 和光照的关系
 
