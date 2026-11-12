@@ -1,0 +1,341 @@
+.antd-mobile-editor-page {
+  min-height: 100dvh;
+  background: #f3f4f6;
+
+  .antd-mobile-toolbar {
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 8px 12px;
+    border: 0;
+    background: #f3f4f6;
+  }
+
+  .ql-toolbar .ql-formats {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+  }
+
+  .ql-toolbar .toolbar-card {
+    gap: 2px;
+    padding: 6px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+  }
+
+  .ql-toolbar .heading-card .ql-header {
+    width: 32px;
+    color: #374151;
+    font-size: 12px;
+    font-weight: 600;
+
+    svg {
+      display: none;
+    }
+
+    &::before {
+      content: attr(data-label);
+    }
+  }
+
+  .ql-toolbar .heading-card .ql-header.ql-active {
+    color: #1677ff;
+    background: #e6f4ff;
+  }
+
+  .ql-toolbar .ql-format-painter {
+    width: auto;
+    min-width: 52px;
+    padding: 0 8px;
+    color: #374151;
+    font-size: 12px;
+  }
+
+  .ql-toolbar .ql-format-painter.ql-active {
+    color: #1677ff;
+    background: #e6f4ff;
+  }
+
+  .table-toolbar-card {
+    position: relative;
+  }
+
+  .ql-toolbar .ql-insert-table {
+    width: auto;
+    min-width: 44px;
+    padding: 0 8px;
+    color: #374151;
+    font-size: 12px;
+  }
+
+  .table-picker {
+    position: absolute;
+    z-index: 30;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 224px;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 14%);
+  }
+
+  .table-picker[hidden] {
+    display: none;
+  }
+
+  .table-picker-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #374151;
+    font-size: 13px;
+  }
+
+  .table-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 20px);
+    gap: 4px;
+  }
+
+  .table-cell-menu {
+    position: fixed;
+    z-index: 50;
+    width: 208px;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 10px 28px rgb(0 0 0 / 18%);
+  }
+
+  .table-row-handle {
+    position: fixed;
+    z-index: 45;
+    width: 22px;
+    height: 28px;
+    padding: 0;
+    border: 1px solid #94a3b8;
+    border-radius: 4px 0 0 4px;
+    color: #475569;
+    background: #fff;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 12%);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .table-row-handle[hidden] {
+    display: none;
+  }
+
+  .table-cell-menu-heading {
+    margin-bottom: 12px;
+    color: #111827;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .table-cell-menu[hidden] {
+    display: none;
+  }
+
+  .table-cell-menu-title {
+    margin-bottom: 8px;
+    color: #6b7280;
+    font-size: 12px;
+  }
+
+  .table-cell-color-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 24px);
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .table-cell-color {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 1px solid #9ca3af;
+    border-radius: 3px;
+    background: #fff;
+
+    &:first-child {
+      background:
+        linear-gradient(135deg, transparent 46%, #ef4444 47%, #ef4444 53%, transparent 54%), #fff;
+    }
+  }
+
+  .table-cell-border-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+
+    button {
+      min-height: 32px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      color: #374151;
+      background: #fff;
+      font-size: 12px;
+    }
+
+    button.is-active {
+      border-color: #1677ff;
+      color: #1677ff;
+      background: #e6f4ff;
+    }
+  }
+
+  .table-cell-border-width-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 14px;
+
+    button {
+      min-height: 30px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      color: #374151;
+      background: #fff;
+      font-size: 12px;
+    }
+
+    button.is-active {
+      border-color: #1677ff;
+      color: #1677ff;
+      background: #e6f4ff;
+    }
+  }
+
+  .table-cell-border-color-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 24px);
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .table-cell-border-color {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 1px solid #9ca3af;
+    border-radius: 3px;
+    background: #fff;
+
+    &:first-child {
+      background:
+        linear-gradient(135deg, transparent 46%, #ef4444 47%, #ef4444 53%, transparent 54%), #fff;
+    }
+  }
+
+  .table-cell-border-reset {
+    width: 100%;
+    min-height: 32px;
+    margin-top: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    color: #374151;
+    background: #fff;
+    font-size: 12px;
+  }
+
+  .ql-toolbar .table-grid-cell {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 1px solid #cbd5e1;
+    background: #fff;
+  }
+
+  .ql-toolbar .table-grid-cell.is-selected {
+    border-color: #1677ff;
+    background: #e6f4ff;
+  }
+
+  .ql-container {
+    min-height: calc(100dvh - 106px);
+    border-color: #e5e7eb;
+    background: #fff;
+    font-size: 16px;
+  }
+
+  .ql-editor {
+    min-height: inherit;
+    padding: 16px;
+
+    .ql-table-wrapper {
+      max-width: 100%;
+      overflow-x: hidden;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    .ql-table {
+      width: 100% !important;
+      max-width: 100%;
+      table-layout: fixed;
+    }
+
+    .ql-table col {
+      width: auto !important;
+    }
+
+    .ql-table-cell {
+      min-width: 0;
+      padding: 4px;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .ql-table-cell-inner {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    ::selection {
+      color: inherit;
+      background: rgb(22 119 255 / 24%);
+    }
+
+    table {
+      width: 100%;
+      margin: 12px 0;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    td {
+      min-width: 0;
+      height: 36px;
+      padding: 4px;
+      border: 1px solid #cbd5e1;
+      vertical-align: top;
+    }
+
+    tr.is-row-selected > td {
+      box-shadow: inset 0 0 0 9999px rgb(148 163 184 / 18%);
+    }
+  }
+}
+
+::highlight(quill-toolbar-selection) {
+  color: inherit;
+  background: rgb(22 119 255 / 24%);
+}

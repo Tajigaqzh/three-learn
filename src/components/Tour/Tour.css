@@ -1,0 +1,145 @@
+.km-tour {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* 遮罩：透明块 + 超大 box-shadow 挖出高亮洞。可点关闭时是 <button>，需重置 UA 样式 */
+.km-tour__mask {
+  position: fixed;
+  /* 重置 <button> 默认样式，让它和 div 表现一致 */
+  padding: 0;
+  border: none;
+  appearance: none;
+  cursor: pointer;
+  pointer-events: auto;
+  background: transparent;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+  transition:
+    top 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    left 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 高亮描边 */
+.km-tour__ring {
+  position: fixed;
+  pointer-events: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+  transition:
+    top 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    left 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 气泡 */
+.km-tour__bubble {
+  position: fixed;
+  /* 重置原生 <dialog> 的 UA 默认样式 */
+  margin: 0;
+  border: none;
+  inset: auto;
+  pointer-events: auto;
+  max-width: min(78vw, 320px);
+  padding: 12px 14px;
+  color: #fff;
+  background: #e0342c;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(224, 52, 44, 0.35);
+  font-size: 14px;
+  line-height: 1.5;
+  transition:
+    top 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    left 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.24s ease,
+    transform 0.24s ease;
+  animation: km-tour-pop 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes km-tour-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 箭头 */
+.km-tour__arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 8px solid #e0342c;
+}
+
+.km-tour__title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.km-tour__desc {
+  opacity: 0.96;
+}
+
+.km-tour__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* 无标题/说明时（单行紧凑样式）也能对齐 */
+.km-tour__bubble:not(:has(.km-tour__title)):not(:has(.km-tour__desc)) .km-tour__footer {
+  margin-top: 0;
+}
+
+.km-tour__counter {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.km-tour__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.km-tour__divider {
+  width: 1px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.km-tour__btn {
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 4px;
+  font-family: inherit;
+}
+
+.km-tour__btn--ghost {
+  opacity: 0.85;
+}
+
+.km-tour__btn--link {
+  font-weight: 600;
+}
+
+.km-tour__btn:active {
+  opacity: 0.6;
+}

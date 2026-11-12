@@ -1,0 +1,57 @@
+/* mammoth 输出的语义标签排版样式 */
+.mammoth-preview h1 {
+  font-size: 1.6em;
+  margin: 0.8em 0 0.4em;
+}
+.mammoth-preview h2 {
+  font-size: 1.4em;
+  margin: 0.8em 0 0.4em;
+}
+.mammoth-preview h3 {
+  font-size: 1.2em;
+  margin: 0.7em 0 0.35em;
+}
+.mammoth-preview p {
+  margin: 0.5em 0;
+}
+.mammoth-preview img {
+  max-width: 100%;
+  height: auto;
+}
+.mammoth-preview table {
+  border-collapse: collapse;
+  margin: 0.8em 0;
+}
+.mammoth-preview th,
+.mammoth-preview td {
+  border: 1px solid #d9d9d9;
+  padding: 6px 12px;
+}
+.mammoth-preview th {
+  background: #fafafa;
+}
+.mammoth-preview ul,
+.mammoth-preview ol {
+  padding-left: 1.6em;
+}
+.mammoth-preview blockquote {
+  margin: 0.8em 0;
+  padding: 4px 16px;
+  border-left: 4px solid #d9d9d9;
+  color: #595959;
+}
+
+/* 手机仿真机内的排版：字号更小，标题相应收敛 */
+.mammoth-preview--mobile {
+  font-size: 14px;
+  word-break: break-word;
+}
+.mammoth-preview--mobile h1 {
+  font-size: 1.4em;
+}
+.mammoth-preview--mobile h2 {
+  font-size: 1.25em;
+}
+.mammoth-preview--mobile h3 {
+  font-size: 1.1em;
+}

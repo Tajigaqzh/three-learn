@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <title>demo</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <style>
+      .demo-container {
+        width: 300px;
+        height: 300px;
+        background-color: gray;
+        textarea {
+          width: 290px;
+          height: 300px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo-container">
+      <label>
+        <textarea></textarea>
+      </label>
+    </div>
+    <script>
+      const textarea = document.querySelector('textarea');
+      textarea.addEventListener('paste', (event) => {
+        /**
+         *
+         * 0
+         * :
+         * "text/plain"
+         * 1
+         * :
+         * "text/html"
+         * 2
+         * :
+         * "text/rtf"
+         */
+        console.log([...event.clipboardData.types]);
+
+        const html = event.clipboardData.getData('text/html');
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+
+        console.log(doc);
+      });
+    </script>
+  </body>
+</html>
