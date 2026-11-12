@@ -101,7 +101,17 @@ function cssLengthToPixels(value: string): string | undefined {
 
   const amount = Number(match[1]);
   const unit = (match[2] || 'px').toLowerCase();
-  const factor = { pt: 4 / 3, px: 1, in: 96, cm: 96 / 2.54, mm: 96 / 25.4, pc: 16 }[unit];
+  const factors: Record<string, number> = {
+    pt: 4 / 3,
+    px: 1,
+    in: 96,
+    cm: 96 / 2.54,
+    mm: 96 / 25.4,
+    pc: 16,
+  };
+  const factor = factors[unit];
+
+  if (factor === undefined) return undefined;
 
   return `${Math.round(amount * factor * 100) / 100}px`;
 }
@@ -253,8 +263,10 @@ function mergeFormatsIntoDelta(delta: Delta, formats: FormatMap, block: boolean)
   if (Object.keys(formats).length === 0) return delta;
 
   return delta.reduce((result, op) => {
+    if (op.insert === undefined || op.insert === null) return result;
+
     if (typeof op.insert !== 'string') {
-      return result.insert(op.insert, op.attributes);
+      return result.insert(op.insert, op.attributes ?? {});
     }
 
     if (!block) {
