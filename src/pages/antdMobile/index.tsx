@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SafeArea } from 'antd-mobile';
 import Quill, { Delta } from 'quill';
 import TableUp, { TableCellInnerFormat } from 'quill-table-up';
+import IPhoneXSimulator from '@/components/IPhoneXSimulator/IPhoneXSimulator';
 import 'quill/dist/quill.snow.css';
 import 'quill-table-up/index.css';
 import './WordPastePlugin';
@@ -81,17 +82,44 @@ const BLOCK_FORMATS = new Set([
 const TOOLBAR_SELECTION_HIGHLIGHT = 'quill-toolbar-selection';
 
 function buildDelta() {
-  const delta = new Delta();
-  delta.insert('你好', {
-    bold: true,
-    color: 'red',
-  });
-
-  return delta;
+  return new Delta();
 }
 
 const Index = () => {
   const editorRef = useRef<HTMLDivElement>(null);
+  const [previewHtml, setPreviewHtml] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (previewHtml === null) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setPreviewHtml(null);
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [previewHtml]);
+
+  const openPreview = () => {
+    const editorContent = editorRef.current?.querySelector('.ql-editor');
+
+    if (!editorContent) return;
+
+    const previewContent = editorContent.cloneNode(true) as HTMLElement;
+
+    previewContent.removeAttribute('contenteditable');
+    previewContent.querySelectorAll('[contenteditable]').forEach((element) => {
+      element.removeAttribute('contenteditable');
+    });
+
+    setPreviewHtml(previewContent.innerHTML);
+  };
 
   useEffect(() => {
     const editor = editorRef.current;
@@ -162,6 +190,16 @@ const Index = () => {
         this.quill.format('color', value || false, 'user');
       }
 
+      this.quill.setSelection(range.index, range.length, 'silent');
+    };
+
+    const handleFirstLineIndent = function (this: ToolbarHandlerContext, value: string) {
+      const range = getTargetRange(this.quill);
+
+      if (!range) return;
+
+      this.quill.setSelection(range.index, range.length, 'silent');
+      this.quill.format('word-text-indent', value || false, 'user');
       this.quill.setSelection(range.index, range.length, 'silent');
     };
 
@@ -243,6 +281,7 @@ const Index = () => {
             underline: createInlineFormatHandler('underline'),
             strike: createInlineFormatHandler('strike'),
             color: handleColor,
+            'first-line-indent': handleFirstLineIndent,
             'format-painter': handleFormatPainter,
             'insert-table': handleInsertTableMenu,
           },
@@ -655,6 +694,12 @@ const Index = () => {
     <main className="antd-mobile-editor-page">
       <SafeArea position="top" />
 
+      <div className="antd-mobile-page-actions">
+        <button type="button" className="antd-mobile-preview-button" onClick={openPreview}>
+          预览
+        </button>
+      </div>
+
       <div id="antd-mobile-toolbar" className="antd-mobile-toolbar" aria-label="文本编辑工具栏">
         <span className="ql-formats toolbar-card" aria-label="文字样式">
           <button type="button" className="ql-bold" aria-label="粗体" />
@@ -689,6 +734,20 @@ const Index = () => {
           <button type="button" className="ql-align" value="" aria-label="左对齐" />
           <button type="button" className="ql-align" value="center" aria-label="居中对齐" />
           <button type="button" className="ql-align" value="right" aria-label="右对齐" />
+          <button type="button" className="ql-indent" value="-1" aria-label="减少缩进" />
+          <button type="button" className="ql-indent" value="+1" aria-label="增加缩进" />
+          <select
+            className="ql-first-line-indent"
+            defaultValue=""
+            aria-label="首行缩进"
+            title="首行缩进"
+          >
+            <option value="">首行缩进</option>
+            <option value="1em">缩进 1 字符</option>
+            <option value="2em">缩进 2 字符</option>
+            <option value="3em">缩进 3 字符</option>
+            <option value="4em">缩进 4 字符</option>
+          </select>
         </span>
 
         <span className="ql-formats toolbar-card">
@@ -835,7 +894,53 @@ const Index = () => {
       </div>
 
       <div ref={editorRef} />
-      <SafeArea position="bottom" />
+      {previewHtml !== null && (
+        <div
+          className="antd-mobile-preview-overlay"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setPreviewHtml(null);
+          }}
+        >
+          <dialog
+            open
+            className="antd-mobile-preview-dialog"
+            aria-modal="true"
+            aria-label="手机预览"
+          >
+            <button
+              type="button"
+              className="antd-mobile-preview-close"
+              aria-label="关闭预览"
+              title="关闭预览"
+              onClick={() => setPreviewHtml(null)}
+            >
+              ×
+            </button>
+            <IPhoneXSimulator>
+              <div className="antd-mobile-preview-screen">
+                <div className="antd-mobile-preview-backdrop" />
+                <div className="antd-mobile-preview-drawer">
+                  <div className="antd-mobile-preview-article">
+                    <div
+                      className="ql-editor"
+                      contentEditable={false}
+                      dangerouslySetInnerHTML={{ __html: previewHtml }}
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    className="antd-mobile-preview-confirm"
+                    onClick={() => setPreviewHtml(null)}
+                  >
+                    确认并同意
+                  </button>
+                </div>
+              </div>
+            </IPhoneXSimulator>
+          </dialog>
+        </div>
+      )}
     </main>
   );
 };

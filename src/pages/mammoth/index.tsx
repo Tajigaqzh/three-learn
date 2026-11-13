@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type DragEvent } from 'react';
 import mammoth from 'mammoth';
-import { DeviceFrameset } from 'react-device-frameset';
-import 'react-device-frameset/styles/marvel-devices.css';
+import IPhoneXSimulator from '@/components/IPhoneXSimulator/IPhoneXSimulator';
 import './preview.css';
 
 type ConvertResult = {
@@ -255,7 +254,7 @@ const MammothDemo = () => {
             }}
           >
             {/* iPhone X 外壳，缩放到 80% 放进弹窗 */}
-            <DeviceFrameset device="iPhone X" zoom={0.8} width={375} height={812}>
+            <IPhoneXSimulator zoom={0.8}>
               <div
                 style={{
                   height: '100%',
@@ -285,7 +284,7 @@ const MammothDemo = () => {
                   style={{ flex: 1, overflowY: 'auto', padding: '12px 16px', lineHeight: 1.7 }}
                 />
               </div>
-            </DeviceFrameset>
+            </IPhoneXSimulator>
             <button
               onClick={() => setMobilePreview(false)}
               style={{

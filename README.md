@@ -1,34 +1,90 @@
-# React + TypeScript + Vite
+# qzh261112需求
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## 策略到期时间通过定时任务同步到方正
 
-Currently, two official plugins are available:
+### 星展后台
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+/operations/strategy-group-jcj/expire-export-record
+新增路由 到期时间导出记录
 
-## React Compiler
+支持选择时间，最多选择6个月
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+子组件
+expire-export-record-detail
 
-Note: This will impact Vite dev & build performances.
+### 方正后台
 
-## Expanding the Oxlint configuration
+新增路由
+用户策略更新记录
+operations/user-strategy-update-record
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+子组件
+user-strategy-update-record-detail
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+### 方正移动端和pc
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+修改，加弹框
+mobile/strategy/my-strategy
+修改，加弹框
+strategy/strategy-list
+
+### 树懒后台
+
+cd/web-admin
+
+新增
+/strategy/message-manage
+
+## 策略支持一键停用+一键停用记录
+
+### 事件上报
+
+### 策略一键停用
+
+mobile/user/user-center 修改，添加策略一键停用和一键停用记录
+
+### 策略一键停用记录
+
+webview新开页 新增路由
+/mobile/user/strategy-stop-record
+
+方正，后台也会新增一条记录不需要改动，但是要验证一下是否正常展示。
+
+## 诚智投APP版支持日志导出-分享ZIP到微信
+
+mobile/user/user-center
+
+新增日志导出列表页
+mobile/user/log-export
+
+### 日志导入新开页
+
+## 量化2.0系统管理后台支持富文本形式配置登录页面隐私协议。
+
+/qt/privacy-agreement
+修改
+
+## 【新增】星展-行情中心：支持5分钟、15分钟、30分钟、60分钟、90分钟、120分钟 K线
+
+修改
+/quote-center/quote/stock-list
+
+富文本编辑器支持功能
+
+加粗
+倾斜
+下划线
+删除线
+格式刷
+h1~h6标题
+正文
+列表
+序号列表
+字体演示
+着重标题
+
+对齐
+表格（三方插件）
+链接，
+
+粘贴word
